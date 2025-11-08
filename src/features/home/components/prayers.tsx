@@ -4,15 +4,16 @@ import { HStack } from "@/components/ui/hstack";
 import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
+import { useRouter } from "expo-router";
 import {
-    Bell,
-    ChevronLeft,
-    MapPin,
-    Moon,
-    Sun,
-    Sunrise,
-    Sunset,
-    Timer,
+  Bell,
+  ChevronLeft,
+  MapPin,
+  Moon,
+  Sun,
+  Sunrise,
+  Sunset,
+  Timer,
 } from "lucide-react-native";
 import { useEffect, useState } from "react";
 import { ScrollView } from "react-native";
@@ -101,6 +102,7 @@ const getTimeDifference = (time1: string, time2: string) => {
 };
 
 export default function Prayers() {
+  const router = useRouter();
   const [data] = useState(fakePrayersData);
   const [currentTime, setCurrentTime] = useState(getCurrentTime());
   const [currentPrayerIndex, setCurrentPrayerIndex] = useState(
@@ -225,7 +227,9 @@ export default function Prayers() {
             action="secondary"
             variant="link"
             className="border-none"
-            onPress={() => {}}
+            onPress={() => {
+              router.push("/all-prayers");
+            }}
           >
             <Icon
               as={ChevronLeft}

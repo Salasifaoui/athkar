@@ -15,6 +15,8 @@ import {
 } from "lucide-react-native";
 import { Button, ButtonIcon } from "../button";
 import { HStack } from "../hstack";
+import { Text } from "../text";
+import { VStack } from "../vstack";
 
 interface NavBarProps {
   children?: React.ReactNode;
@@ -29,6 +31,8 @@ interface NavBarProps {
   showContactButton?: boolean;
   showFilterButton?: boolean;
   showComponent?: React.ReactNode;
+  title?: string;
+  subtitle?: string;
 }
 export function NavBar({
   children,
@@ -43,6 +47,8 @@ export function NavBar({
   showContactButton = false,
   showFilterButton = false,
   showComponent = null,
+  title,
+  subtitle,
 }: NavBarProps) {
   const { isDarkColorScheme } = useColorScheme();
   const theme = THEME[isDarkColorScheme ? "dark" : "light"];
@@ -54,6 +60,15 @@ export function NavBar({
       </HStack>
 
       <HStack className="items-center justify-end px-4 py-4 gap-2.5">
+        {title && (
+          <VStack className="items-center justify-center">
+            <Text size="lg" bold>{title}</Text>
+            {subtitle && (
+              <Text size="sm" className="text-gray-500">{subtitle}</Text>
+            )}
+          </VStack>
+        )}
+        
         {showSearchButton && (
           <Button variant="link" action="secondary" onPress={() => {}}>
             <ButtonIcon as={Search} style={{ width: 25, height: 25 }} className="text-primary-400" />

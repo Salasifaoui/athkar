@@ -1,7 +1,7 @@
 import {
-    Actionsheet,
-    ActionsheetBackdrop,
-    ActionsheetContent
+  Actionsheet,
+  ActionsheetBackdrop,
+  ActionsheetContent
 } from "@/components/ui/actionsheet";
 import { Heading } from "@/components/ui/heading";
 import { HStack } from "@/components/ui/hstack";
@@ -17,6 +17,7 @@ export interface ZixActionSheetProps {
   children: React.ReactNode;
   title?: string;
   subtitle?: string;
+  customHeader?: React.ReactNode;
 }
 export default function ZixActionSheet({
   isOpen,
@@ -24,14 +25,16 @@ export default function ZixActionSheet({
   children,
   title,
   subtitle,
+  customHeader,
 }: ZixActionSheetProps) {
   return (
     <Actionsheet isOpen={isOpen} onClose={onClose}>
       <ActionsheetBackdrop />
 
       <ActionsheetContent className="px-5">
+     
         <HStack className="justify-between w-full mt-3 mb-4">
-          <VStack className="flex-1">
+          {customHeader ? customHeader : <VStack className="flex-1">
             <Heading size="md" className="font-semibold">
               {title}
             </Heading>
@@ -40,7 +43,7 @@ export default function ZixActionSheet({
                 {subtitle}
               </Text>
             )}
-          </VStack>
+          </VStack>}
           <Pressable onPress={onClose} className="p-2">
             <Icon as={X} size="lg" className="stroke-black" />
           </Pressable>

@@ -18,7 +18,7 @@ import * as ImagePicker from "expo-image-picker";
 import { Camera, ImageIcon, UploadCloud, X } from "lucide-react-native";
 import { useEffect, useState } from "react";
 import { Alert, FlatList, Platform } from "react-native";
-import { useAuth } from "../features/auth/hooks/useAuth";
+// import { useAuth } from "../features/auth/hooks/useAuth";
 import { useFileUpload } from "../hooks/useFileUpload";
 import { Media } from "../models/Media";
 
@@ -44,7 +44,7 @@ export const GallerySheet = ({
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
 
-  const { user } = useAuth();
+  // const { user } = useAuth();
   const {
     isUploading: hookUploading,
     progress,
@@ -132,10 +132,10 @@ export const GallerySheet = ({
   };
 
   const uploadImage = async (image: Media) => {
-    if (!user) {
-      Alert.alert("Error", "User not authenticated");
-      return;
-    }
+    // if (!user) {
+    //   Alert.alert("Error", "User not authenticated");
+    //   return;
+    // }
 
     try {
       setIsUploading(true);

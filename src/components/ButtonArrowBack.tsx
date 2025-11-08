@@ -8,7 +8,7 @@ export default function ButtonArrowBack() {
     <Button
       variant="link"
       action="secondary"
-      className="w-10 h-10 rounded-2xl border-2 border-primary-400 justify-center items-center"
+      className="w-10 h-10  justify-center items-center"
       onPress={() => {
         router.back();
       }}
