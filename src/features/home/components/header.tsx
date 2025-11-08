@@ -88,18 +88,16 @@ export default function Header() {
               </Box>
             </HStack>
 
-            {/* <HStack className="gap-2 justify-end items-end">
-              <Box className="justify-center items-center bg-white/20 backdrop-blur-sm rounded-lg px-3 py-2 border border-white/30">
-                <Text className="text-white text-lg font-bold">
-                  {data.date.hejriYear}
-                </Text>
-              </Box>
-              <Box className="justify-center items-center bg-white/20 backdrop-blur-sm rounded-lg px-3 py-2 border border-white/30">
-                <Text className="text-white text-lg font-bold">
-                  {data.date.year}
-                </Text>
-              </Box>
-            </HStack> */}
+            <HStack className="gap-2 justify-end items-end">
+              <Text className="text-white text-lg font-bold">
+                {data.date.hejriYear}
+              </Text>
+              <Text className="text-white text-lg font-bold">/</Text>
+
+              <Text className="text-white text-lg font-bold">
+                {data.date.year}
+              </Text>
+            </HStack>
           </VStack>
         </HStack>
 
