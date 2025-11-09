@@ -55,7 +55,7 @@ export function NavBar({
   const router = useRouter();
   return (
     <HStack className="items-center justify-between">
-      <HStack className="items-center justify-start px-4 py-3">
+      <HStack className="items-center justify-start py-3">
         {children}
       </HStack>
 

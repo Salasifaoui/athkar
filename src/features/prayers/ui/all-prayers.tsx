@@ -1,35 +1,26 @@
-import { Box } from "@/components/ui/box";
 import { HStack } from "@/components/ui/hstack";
 import { NavBar } from "@/components/ui/nav-bar";
 import { ScreenLayout } from "@/components/ui/screen-layout/screen-layout";
-import { VStack } from "@/components/ui/vstack";
 import { ButtonArrowBack } from "@/src/components";
 import ButtonAction from "@/src/components/ButtonAction";
 import { Settings } from "lucide-react-native";
 import { useState } from "react";
-import { ImageBackground } from "react-native";
+import { ScrollView } from "react-native";
+import CardPrayer from "./component/cardPrayer";
+import ListPrayer from "./component/list-prayer";
 import SettingCard from "./component/setting-card";
+
 // Radio Select Component
 
 export default function AllPrayersScreen() {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-
-  // Placeholder background image - replace with actual image
-  const backgroundImage = {
-    uri: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=800",
-  };
+  const [currentDate, setCurrentDate] = useState(new Date());
 
   return (
-    <>
-      <ImageBackground
-        source={backgroundImage}
-        resizeMode="cover"
-        className="flex-1"
-      >
-        <Box className="absolute inset-0 bg-black/20" />
-        <ScreenLayout>
+    <ScreenLayout className="bg-islamic">
+        
           <NavBar title="مواعيد الصلاة" subtitle="الصلوات اليومية">
-            <HStack className="items-center justify-end gap-3">
+            <HStack className="items-center justify-end gap-6">
             <ButtonArrowBack />
             <ButtonAction
               variant="link"
@@ -42,15 +33,18 @@ export default function AllPrayersScreen() {
             
             </HStack>
           </NavBar>
-          <VStack className="flex-1">{/* Prayer cards will go here */}</VStack>
-        </ScreenLayout>
-      </ImageBackground>
+          <ScrollView className="flex-1">
+            <CardPrayer currentDate={currentDate} onDateChange={setCurrentDate} />
+            <ListPrayer currentDate={currentDate} />
+          </ScrollView>
+        
+
 
       {/* Settings ActionSheet */}
       <SettingCard
         isOpen={isSettingsOpen}
         onClose={() => setIsSettingsOpen(false)}
       />
-    </>
+    </ScreenLayout>
   );
 }

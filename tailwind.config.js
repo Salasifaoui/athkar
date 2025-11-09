@@ -18,6 +18,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        'islamic': "url('@/assets/images/islamic.jpg')",
+      },
       colors: {
         primary: {
           0: 'rgb(var(--color-primary-0)/<alpha-value>)',
