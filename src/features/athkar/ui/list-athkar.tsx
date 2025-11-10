@@ -4,11 +4,11 @@ import { VStack } from "@/components/ui/vstack";
 import { ScrollView } from "react-native";
 import { useAthkar } from "../hooks/useAthkar";
 
-export default function ListAthkar() {
-    const { items } = useAthkar("أذكار الصباح والمساء");
+export default function ListAthkar({category}: {category: string}) {
+    const { items } = useAthkar(category);
 
     return (
-        <ScrollView className="h-96 p-5" showsVerticalScrollIndicator={false}>
+        <ScrollView style={{ height: 684 }} showsVerticalScrollIndicator={false}>
             <VStack className="gap-3 px-4 pb-4 pt-2">
                 {items.map((item) => (
                     <Card

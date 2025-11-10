@@ -2804,7 +2804,7 @@ export const athkar = [
 	},
 	{
 		"id": 130,
-		"category": "فضل التسبيح و التحميد، و التهليل، و التكبير",
+		"category": "التسبيح",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_131.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_131",
 		"array": [

@@ -9,27 +9,27 @@ import { useState } from "react";
 import ListAthkar from "./list-athkar";
 
 
-export default function Athkar() {
+export default function Athkar({category, color}: {category: string, color: string}) {
     const [isOpen, setIsOpen] = useState(false);
     return (
         <>
         <Pressable onPress={() => setIsOpen(!isOpen)}>
-            <HStack className="items-center justify-between">
-                <Box className="w-12 h-12 rounded-full bg-gray-100 items-center justify-center mr-3">
-                    <Icon as={BookOpen} size={24} className="text-primary-600" />
+            <HStack className="items-center justify-between" style={{ borderColor: color }}>
+                <Box className={`w-12 h-12 rounded-full items-center justify-center mr-3`}>
+                    <Icon as={BookOpen} size={24} stroke={color}/>
                 </Box>
-                <Text className="text-gray-800 text-base font-medium flex-1 text-right">
-                    أذكار الصباح والمساء
+                <Text className="text-primary-800 text-base font-medium flex-1 text-right">
+                    {category}
                 </Text>
             </HStack>
         </Pressable>
         <ZixActionSheet
             isOpen={isOpen}
             onClose={() => setIsOpen(false)}
-            title="أذكار الصباح والمساء"
+            title={category}
         >
             
-            <ListAthkar />
+            <ListAthkar category={category} />
         </ZixActionSheet>
         </>
     )

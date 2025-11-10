@@ -8,7 +8,7 @@ export default function ListNames() {
     const { names } = useNames();
     
     return (
-        <ScrollView className="h-96 p-5">
+        <ScrollView style={{ height: 684 }} showsVerticalScrollIndicator={false}>
             <VStack className="gap-3 px-4 pb-4 pt-2">
                 {names.map((item) => (
                     <Card
