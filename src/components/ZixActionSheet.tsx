@@ -1,15 +1,13 @@
 import {
   Actionsheet,
   ActionsheetBackdrop,
-  ActionsheetContent
+  ActionsheetContent,
 } from "@/components/ui/actionsheet";
+import { Divider } from "@/components/ui/divider";
 import { Heading } from "@/components/ui/heading";
 import { HStack } from "@/components/ui/hstack";
-import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
-import { X } from "lucide-react-native";
-import { Pressable } from "react-native";
 
 export interface ZixActionSheetProps {
   isOpen: boolean;
@@ -31,10 +29,10 @@ export default function ZixActionSheet({
     <Actionsheet isOpen={isOpen} onClose={onClose}>
       <ActionsheetBackdrop />
 
-      <ActionsheetContent className="px-5">
-     
-        <HStack className="justify-between w-full mt-3 mb-4">
-          {customHeader ? customHeader : <VStack className="flex-1">
+      <ActionsheetContent className="p-0">
+        <HStack className="justify-between w-full mt-3 mb-4 p-5">
+          {customHeader && customHeader}
+          <VStack className="flex-1 items-end justify-end">
             <Heading size="md" className="font-semibold">
               {title}
             </Heading>
@@ -43,11 +41,13 @@ export default function ZixActionSheet({
                 {subtitle}
               </Text>
             )}
-          </VStack>}
-          <Pressable onPress={onClose} className="p-2">
-            <Icon as={X} size="lg" className="stroke-black" />
-          </Pressable>
+            
+          </VStack>
+          
+          
         </HStack>
+        <Divider className="w-full border-primary-200" />
+      
         {children}
       </ActionsheetContent>
     </Actionsheet>

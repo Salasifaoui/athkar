@@ -8,15 +8,16 @@ import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
 import ButtonAction from "@/src/components/ButtonAction";
 import ZixDialogueBox from "@/src/components/ZixDialogueBox";
+import { useSelectedCity } from "@/src/features/prayers/hooks";
 import {
-    Calculator,
-    Check,
-    Clock,
-    MapPin,
-    RefreshCcw,
-    Settings,
-    Stars,
-    X,
+  Calculator,
+  Check,
+  Clock,
+  MapPin,
+  RefreshCcw,
+  Settings,
+  Stars,
+  X,
 } from "lucide-react-native";
 import { useState } from "react";
 import { ScrollView } from "react-native";
@@ -101,19 +102,11 @@ export default function SettingCard({
   isOpen: boolean;
   onClose: () => void;
 }) {
+  const { selectedCity } = useSelectedCity();
   const [calculationMethod, setCalculationMethod] = useState(
     "رابطة العالم الاسلامية"
   );
   const [asrMethod, setAsrMethod] = useState("الشافعي");
-  const [location, setLocation] = useState("Thyna");
-
-  const colors = [
-    "#4A90E2", // Blue
-    "#F5A623", // Orange
-    "#50C878", // Green
-    "#E74C3C", // Red
-    "#9B59B6", // Purple
-  ];
 
   const calculationMethods = [
     "رابطة العالم الاسلامية",
@@ -125,10 +118,7 @@ export default function SettingCard({
   const asrMethods = ["الشافعي", "الحنفي"];
 
   const handleReloadLocation = () => {
-    // TODO: Implement location reload logic with actual geolocation API
     console.log("Reloading location...");
-    // Placeholder: Update location when geolocation is implemented
-    // setLocation(newLocation);
   };
 
   const handleClose = () => {
@@ -232,7 +222,7 @@ export default function SettingCard({
           icon={MapPin}
           color="tertiary"
           title="تحديث الموقع"
-          subtitle="تحديث الموقع الحاليلحساب مواقيت الصلاة بدقة"
+          subtitle="تحديث الموقع الحالي لحساب مواقيت الصلاة بدقة"
         >
           <Box className="p-6 items-center justify-center">
             <HStack className="w-full items-center justify-end gap-3 mb-3">
@@ -241,7 +231,7 @@ export default function SettingCard({
                   الموقع الحالي
                 </Text>
                 <Text className="text-base font-semibold text-gray-900 text-right">
-                  {location}
+                  {selectedCity.name}
                 </Text>
               </VStack>
               <Icon as={MapPin} size={20} className="text-primary-500" />

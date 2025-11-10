@@ -4,10 +4,12 @@ import { Divider } from "@/components/ui/divider";
 import { HStack } from "@/components/ui/hstack";
 import { Icon } from "@/components/ui/icon";
 import { Pressable } from "@/components/ui/pressable";
+import { Spinner } from "@/components/ui/spinner";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
+import { usePrayerCountdown, usePrayers, useSelectedCity } from "@/src/features/prayers/hooks";
 import { ChevronLeft, ChevronRight, Clock, Stars } from "lucide-react-native";
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { View } from "react-native";
 
 interface CardPrayerProps {
@@ -16,31 +18,33 @@ interface CardPrayerProps {
 }
 
 export default function CardPrayer({ currentDate, onDateChange }: CardPrayerProps) {
-  const [countdown, setCountdown] = useState({
-    hours: 0,
-    minutes: 35,
-    seconds: 54,
-  });
-  const progress = 0.67; // 67% progress
+  const { selectedCity } = useSelectedCity();
+  // Fetch prayers for the selected date
+  const { prayers, timings, loading, currentDay } = usePrayers(selectedCity, currentDate);
+
+  console.log('currentDay',JSON.stringify(currentDay, null, 2));
+  
+  // Get countdown timer (only for today)
+  const isToday = currentDate.toDateString() === new Date().toDateString();
+  const countdown = usePrayerCountdown(isToday ? timings : null);
 
   // Format Gregorian date
-  const formatGregorianDate = (date: Date) => {
-    return date.toLocaleDateString("en-US", {
-      weekday: "short",
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-    });
+  const formatGregorianDate = () => {
+    const day = currentDay?.gregorian.day;
+    const month = currentDay?.gregorian.month.en;
+    const year = currentDay?.gregorian.year;
+    return `${day} ${month} ${year}`;
   };
 
   // Format Hijri date (simplified - in production, use a proper Hijri calendar library)
-  const formatHijriDate = (date: Date) => {
-    // This is a placeholder - you should use a proper Hijri calendar conversion
-    // Simplified calculation (not accurate)
-    const hijriYear = 1447;
-    const hijriMonth = "جمادى الأولى";
-    const hijriDay = 18;
-    return `${hijriMonth} ${hijriYear} ${hijriDay}`;
+  const formatHijriDate = () => {
+    if (!currentDay) {
+      return '';
+    }
+    const hijriYear = currentDay.hijri.year;
+    const hijriMonth = currentDay.hijri.month.ar;
+    const hijriDay = currentDay.hijri.day;
+    return `${hijriDay} ${hijriMonth} ${hijriYear}`;
   };
 
   const navigateDate = (direction: "prev" | "next") => {
@@ -53,27 +57,58 @@ export default function CardPrayer({ currentDate, onDateChange }: CardPrayerProp
     onDateChange(newDate);
   };
 
-  // Countdown timer effect
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCountdown((prev) => {
-        let { hours, minutes, seconds } = prev;
-        if (seconds > 0) {
-          seconds--;
-        } else if (minutes > 0) {
-          minutes--;
-          seconds = 59;
-        } else if (hours > 0) {
-          hours--;
-          minutes = 59;
-          seconds = 59;
-        }
-        return { hours, minutes, seconds };
-      });
-    }, 1000);
+  // Calculate progress percentage
+  const progress = useMemo(() => {
+    if (!countdown || !prayers.length) {
+      return 0;
+    }
 
-    return () => clearInterval(interval);
-  }, []);
+    // Find current and next prayer indices
+    const now = new Date();
+    const currentMinutes = now.getHours() * 60 + now.getMinutes();
+    
+    let currentPrayerIndex = -1;
+    let nextPrayerIndex = 0;
+
+    for (let i = 0; i < prayers.length; i++) {
+      const [hours, mins] = prayers[i].time.split(":").map(Number);
+      const prayerMinutes = hours * 60 + mins;
+      if (currentMinutes < prayerMinutes) {
+        nextPrayerIndex = i;
+        currentPrayerIndex = i === 0 ? prayers.length - 1 : i - 1;
+        break;
+      }
+    }
+
+    if (currentPrayerIndex === -1) {
+      return 0;
+    }
+
+    const currentPrayer = prayers[currentPrayerIndex];
+    const nextPrayer = prayers[nextPrayerIndex];
+    
+    const [currentHours, currentMins] = currentPrayer.time.split(":").map(Number);
+    const [nextHours, nextMins] = nextPrayer.time.split(":").map(Number);
+    
+    const currentPrayerMinutes = currentHours * 60 + currentMins;
+    const nextPrayerMinutes = nextHours * 60 + nextMins;
+    
+    let timeSinceCurrentPrayer: number;
+    let totalTimeBetweenPrayers: number;
+
+    if (nextPrayerIndex === 0) {
+      timeSinceCurrentPrayer = currentMinutes - currentPrayerMinutes;
+      totalTimeBetweenPrayers = 24 * 60 - currentPrayerMinutes + nextPrayerMinutes;
+    } else {
+      timeSinceCurrentPrayer = currentMinutes - currentPrayerMinutes;
+      totalTimeBetweenPrayers = nextPrayerMinutes - currentPrayerMinutes;
+    }
+
+    return Math.min(
+      Math.max((timeSinceCurrentPrayer / totalTimeBetweenPrayers) * 100, 0),
+      100
+    ) / 100;
+  }, [countdown, prayers]);
 
   return (
     <Card className="overflow-hidden rounded-2xl p-0 m-4">
@@ -84,14 +119,14 @@ export default function CardPrayer({ currentDate, onDateChange }: CardPrayerProp
             {/* Gregorian Date with Navigation */}
             <HStack className="items-center justify-between gap-4 w-full">
               <Pressable
-                onPress={() => navigateDate("prev")}
+                onPress={() => navigateDate("next")}
                 className="w-14 h-14 rounded-full bg-primary-200/50 items-center justify-center"
               >
                 <Icon as={ChevronLeft} size={20} className="text-white" />
               </Pressable>
               <VStack className="items-center justify-center gap-2">
                 <Text className="text-white text-lg font-bold">
-                  {formatGregorianDate(currentDate)}
+                  {formatGregorianDate()}
                 </Text>
                 <HStack className="items-center justify-center gap-2">
                   <Divider className="w-20 bg-white" />
@@ -99,12 +134,12 @@ export default function CardPrayer({ currentDate, onDateChange }: CardPrayerProp
                   <Divider className="w-20 bg-white" />
                 </HStack>
                 <Text className="text-white text-lg font-bold">
-                  {formatHijriDate(currentDate)}
+                  {formatHijriDate()}
                 </Text>
               </VStack>
 
               <Pressable
-                onPress={() => navigateDate("next")}
+                onPress={() => navigateDate("prev")}
                 className="w-14 h-14 rounded-full bg-primary-200/50 items-center justify-center"
               >
                 <Icon as={ChevronRight} size={20} className="text-white" />
@@ -116,32 +151,45 @@ export default function CardPrayer({ currentDate, onDateChange }: CardPrayerProp
           <Divider className="bg-white mx-auto w-full" />
 
           {/* Countdown Section */}
-          <VStack className="gap-3 p-6">
-            {/* Arabic Label */}
-            <Text className="text-white text-base text-center">
-              الوقت المتبقي حتى العشاء
-            </Text>
+          {loading ? (
+            <VStack className="gap-3 p-6 items-center justify-center">
+              <Spinner size="large" className="text-white" />
+              <Text className="text-white text-base">جاري التحميل...</Text>
+            </VStack>
+          ) : countdown && isToday ? (
+            <VStack className="gap-3 p-6">
+              {/* Arabic Label */}
+              <Text className="text-white text-base text-center">
+                الوقت المتبقي حتى {countdown.nextPrayerNameArabic}
+              </Text>
 
-            {/* Countdown Container with Frosted Glass Effect */}
-            <Box className="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/20 shadow-lg">
-              <HStack className="items-center justify-center gap-3 mb-3">
-                <Text className="text-white text-4xl font-bold">
-                  {String(countdown.hours).padStart(2, "0")}:
-                  {String(countdown.minutes).padStart(2, "0")}:
-                  {String(countdown.seconds).padStart(2, "0")}
-                </Text>
-                <Icon as={Clock} size={24} className="text-white" />
-              </HStack>
+              {/* Countdown Container with Frosted Glass Effect */}
+              <Box className="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/20 shadow-lg">
+                <HStack className="items-center justify-center gap-3 mb-3">
+                  <Text className="text-white text-4xl font-bold">
+                    {String(countdown.hours).padStart(2, "0")}:
+                    {String(countdown.minutes).padStart(2, "0")}:
+                    {String(countdown.seconds).padStart(2, "0")}
+                  </Text>
+                  <Icon as={Clock} size={24} className="text-white" />
+                </HStack>
 
-              {/* Progress Bar */}
-              <View className="h-2 bg-gray-300/30 rounded-full overflow-hidden">
-                <View
-                  className="h-full bg-gray-600 rounded-full"
-                  style={{ width: `${progress * 100}%` }}
-                />
-              </View>
-            </Box>
-          </VStack>
+                {/* Progress Bar */}
+                <View className="h-2 bg-gray-300/30 rounded-full overflow-hidden">
+                  <View
+                    className="h-full bg-gray-600 rounded-full"
+                    style={{ width: `${progress * 100}%` }}
+                  />
+                </View>
+              </Box>
+            </VStack>
+          ) : (
+            <VStack className="gap-3 p-6">
+              <Text className="text-white text-base text-center">
+                {isToday ? "لا توجد بيانات" : "اختر تاريخ اليوم لعرض العد التنازلي"}
+              </Text>
+            </VStack>
+          )}
         </VStack>
       </Box>
     </Card>

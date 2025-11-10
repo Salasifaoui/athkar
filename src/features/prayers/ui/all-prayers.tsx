@@ -10,8 +10,6 @@ import CardPrayer from "./component/cardPrayer";
 import ListPrayer from "./component/list-prayer";
 import SettingCard from "./component/setting-card";
 
-// Radio Select Component
-
 export default function AllPrayersScreen() {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -34,8 +32,13 @@ export default function AllPrayersScreen() {
             </HStack>
           </NavBar>
           <ScrollView className="flex-1">
-            <CardPrayer currentDate={currentDate} onDateChange={setCurrentDate} />
-            <ListPrayer currentDate={currentDate} />
+            <CardPrayer 
+              currentDate={currentDate} 
+              onDateChange={setCurrentDate}
+            />
+            <ListPrayer 
+              currentDate={currentDate}
+            />
           </ScrollView>
         
 

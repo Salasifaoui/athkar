@@ -6,6 +6,7 @@ import "../global.css";
 import { useColorScheme } from "@/src/hooks/useColorSchema";
 
 import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
+import { SelectedCityProvider } from "@/src/features/prayers/hooks";
 
 
 export const unstable_settings = {
@@ -32,8 +33,9 @@ export default function RootLayout() {
   return (
     <AuthProvider>
       <GluestackUIProvider mode={isDarkColorScheme ? "dark" : "light"}>
-
-        <StackLayout />
+        <SelectedCityProvider>
+          <StackLayout />
+        </SelectedCityProvider>
        
         <StatusBar
           key={`root-status-bar-${isDarkColorScheme ? "light" : "dark"}`}

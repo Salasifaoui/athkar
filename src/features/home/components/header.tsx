@@ -8,6 +8,7 @@ import { VStack } from "@/components/ui/vstack";
 import ButtonAction from "@/src/components/ButtonAction";
 import { Book, Info, Radar } from "lucide-react-native";
 import { useState } from "react";
+import { usePrayers, useSelectedCity } from "../../prayers/hooks";
 
 // Fake data for dynamic content
 const fakeData = {
@@ -29,7 +30,8 @@ const fakeData = {
 
 export default function Header() {
   const [data] = useState(fakeData);
-
+  const { selectedCity } = useSelectedCity();
+  const { currentDay } = usePrayers(selectedCity, new Date());
   return (
     <Box className="relative h-[360px] w-full overflow-hidden rounded-b-3xl">
       {/* Background Image */}
@@ -77,7 +79,7 @@ export default function Header() {
 
                 <Box className="justify-center items-center bg-white/20 backdrop-blur-sm rounded-lg px-3 py-2 border border-white/30">
                   <Text className="text-white text-lg font-bold">
-                    {data.date.hejriDate}
+                    {currentDay?.hijri.day} {currentDay?.hijri.month.ar}
                   </Text>
                 </Box>
               </VStack>
@@ -90,7 +92,7 @@ export default function Header() {
 
             <HStack className="gap-2 justify-end items-end">
               <Text className="text-white text-lg font-bold">
-                {data.date.hejriYear}
+                {currentDay?.hijri.year}
               </Text>
               <Text className="text-white text-lg font-bold">/</Text>
 
