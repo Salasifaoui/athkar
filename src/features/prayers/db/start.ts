@@ -9,6 +9,7 @@ export interface PrayerTimeRecord {
   id: number;
   date: string; // JSON string of Gregorian date object
   date_hijri: string; // JSON string of Hijri date object
+  nameArabic: string;
   fajr: string;
   dhuhr: string;
   asr: string;
@@ -94,8 +95,6 @@ export const getPrayerTimesFromDB = async (date: Date): Promise<PrayerTimings | 
     `SELECT * FROM prayer_times WHERE date = ?`,
     [dateStr]
   );
-  console.log('dateStr',dateStr);
-  console.log('result getPrayerTimesFromDB',JSON.stringify(result, null, 2));
   // If not found, try to find by matching the date in the JSON object
   if (!result) {
     // Search for records where the date JSON contains the formatted date
@@ -132,7 +131,7 @@ export const getPrayerTimesFromDB = async (date: Date): Promise<PrayerTimings | 
   return null;
 };
 
-export const getDateGregorianAndHijriFromDB = async (date: Date): Promise<{ date: string; date_hijri: string } | null> => {
+export const getDateGregorianAndHijriFromDB = async (date: Date): Promise<{ date: string; date_hijri: string; nameArabic: string } | null> => {
   const dateStr = formatDate(date);
   let result = await db.getFirstAsync<PrayerTimeRecord>(
     `SELECT * FROM prayer_times WHERE date = ?`,
@@ -166,7 +165,6 @@ export const getDateGregorianAndHijriFromDB = async (date: Date): Promise<{ date
     result = found || null;
   }
   
-  console.log('result getDateGregorianAndHijriFromDB',JSON.stringify(result, null, 2));
   
   if (!result) {
     return null;
@@ -175,6 +173,7 @@ export const getDateGregorianAndHijriFromDB = async (date: Date): Promise<{ date
   return { 
     date: result.date || '',
     date_hijri: result.date_hijri || '',
+    nameArabic: result.nameArabic || '',
   };
 };
 

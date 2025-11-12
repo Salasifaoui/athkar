@@ -24,7 +24,7 @@ export function usePrayers(selectedCity: City | null, date?: Date) {
   const [timings, setTimings] = useState<PrayerTimings | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [currentDay, setCurrentDay] = useState<{ day: string, date_hijri: string } | null>(null);
+  const [currentDay, setCurrentDay] = useState<{ day: string, date_hijri: string, nameArabic: string } | null>(null);
 
   useEffect(() => {
     if (!selectedCity) {
@@ -59,11 +59,12 @@ export function usePrayers(selectedCity: City | null, date?: Date) {
     const fetchCurrentDay = async () => {
       try {
         const dateGregorianAndHijri = await prayerService.getCurrentDayGregorianAndHijri(date || new Date());
-        console.log('dateGregorianAndHijri',JSON.stringify(dateGregorianAndHijri, null, 2));
+
         if (dateGregorianAndHijri) {
           setCurrentDay({
             day: dateGregorianAndHijri.date || '',
             date_hijri: dateGregorianAndHijri.date_hijri || '',
+            nameArabic: dateGregorianAndHijri.nameArabic || '',
           });
         } else {
           setCurrentDay(null);

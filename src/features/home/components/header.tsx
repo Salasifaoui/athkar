@@ -30,7 +30,7 @@ export default function Header() {
 
 
   return (
-    <Box className="relative h-[360px] w-full overflow-hidden rounded-b-3xl">
+    <Box className="relative h-[380px] w-full overflow-hidden rounded-b-3xl">
       {/* Background Image */}
       <Image
         source={{ uri: data.backgroundImage }}
@@ -99,6 +99,11 @@ export default function Header() {
                   {currentDay?.day?.split("-")[2]}
                 </Text>
               </HStack>
+              <Box className="justify-center items-center bg-white/20 backdrop-blur-sm rounded-lg px-3 py-2 border border-white/30">
+              <Text className="text-white text-lg font-bold text-center">
+                {currentDay?.nameArabic}
+              </Text>
+              </Box>
             </VStack>
           ) : (
             <Spinner size="large" />

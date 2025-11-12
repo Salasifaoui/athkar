@@ -21,7 +21,7 @@ export default function HomeScreen() {
     quinary: "#9B59B6",
   }
   return (
-    <ScrollView className="pt-4" showsVerticalScrollIndicator={false}>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <Header />
       <ScreenLayout>
         <VStack className="gap-4 pt-4">
