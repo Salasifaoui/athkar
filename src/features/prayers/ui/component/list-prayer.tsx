@@ -7,6 +7,8 @@ import { Spinner } from "@/components/ui/spinner";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
 import { usePrayers, useSelectedCity } from "@/src/features/prayers/hooks";
+import { prayersAtom, prayersErrorAtom, prayersLoadingAtom } from "@/src/features/prayers/store/prayersStore";
+import { useAtom } from "jotai";
 import { Bell, Moon, Sun, Sunrise, Sunset } from "lucide-react-native";
 import { useMemo } from "react";
 
@@ -39,8 +41,13 @@ const formatTime = (time: string): string => {
 
 export default function ListPrayer({ currentDate }: ListPrayerProps) {
   const { selectedCity } = useSelectedCity();
-  // Fetch prayers for the selected date
-  const { prayers, loading, error } = usePrayers(selectedCity, currentDate);
+  // Trigger data fetch for the selected date
+  usePrayers(selectedCity, currentDate);
+  
+  // Use atoms directly
+  const [prayers] = useAtom(prayersAtom);
+  const [loading] = useAtom(prayersLoadingAtom);
+  const [error] = useAtom(prayersErrorAtom);
 
   // Find next prayer index (only for today)
   const nextPrayerIndex = useMemo(() => {

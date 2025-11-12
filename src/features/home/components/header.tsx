@@ -9,8 +9,9 @@ import { VStack } from "@/components/ui/vstack";
 import ButtonAction from "@/src/components/ButtonAction";
 import { renderNameMonth, renderNameMonthHijri } from "@/src/utils/utils";
 import { Book, Info, Radar } from "lucide-react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePrayers, useSelectedCity } from "../../prayers/hooks";
+import { getCurrentDay } from "../../prayers/hooks/usePrayers";
 
 // Fake data for dynamic content
 const fakeData = {
@@ -23,10 +24,22 @@ const fakeData = {
   },
 };
 
-export default function Header() {
+export default function Header({ currentDate }: { currentDate: Date }) {
   const [data] = useState(fakeData);
   const { selectedCity } = useSelectedCity();
-  const { currentDay, loading } = usePrayers(selectedCity, new Date());
+  const [currentDay, setCurrentDay] = useState<{ date: string, date_hijri: string, nameArabic: string } | null>(null);
+
+  usePrayers(selectedCity, currentDate);
+  // Use atom directly
+
+  useEffect(() => {
+    const fetchCurrentDay = async () => {
+      const currentDay = await getCurrentDay(currentDate);
+      setCurrentDay(currentDay);
+    }
+    fetchCurrentDay();
+  }, [currentDate]);
+
 
 
   return (
@@ -67,12 +80,12 @@ export default function Header() {
           </HStack>
 
           {/* Right: Date boxes (day, month, year) */}
-          { !loading ? (
+          { currentDay  ? (
             <VStack className="gap-2">
               <HStack className="gap-2">
                 <VStack className="gap-2">
                   <Text className="text-white text-lg font-bold text-right">
-                    {renderNameMonth(currentDay?.day || "") || ""}
+                    {renderNameMonth(currentDay?.date || "") || ""}
                   </Text>
 
                   <Box className="justify-center items-center bg-white/20 backdrop-blur-sm rounded-lg px-3 py-2 border border-white/30">
@@ -84,7 +97,7 @@ export default function Header() {
                 </VStack>
                 <Box className="justify-center items-center bg-white/20 backdrop-blur-sm rounded-lg px-3 py-2 border border-white/30">
                   <Text className="text-white text-lg font-bold">
-                    {currentDay?.day?.split("-")[0]}
+                    {currentDay?.date?.split("-")[0]}
                   </Text>
                 </Box>
               </HStack>
@@ -96,7 +109,7 @@ export default function Header() {
                 <Text className="text-white text-lg font-bold">/</Text>
 
                 <Text className="text-white text-lg font-bold">
-                  {currentDay?.day?.split("-")[2]}
+                  {currentDay?.date?.split("-")[2]}
                 </Text>
               </HStack>
               <Box className="justify-center items-center bg-white/20 backdrop-blur-sm rounded-lg px-3 py-2 border border-white/30">

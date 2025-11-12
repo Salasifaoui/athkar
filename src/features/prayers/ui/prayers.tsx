@@ -6,7 +6,9 @@ import { Spinner } from "@/components/ui/spinner";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
 import { useInitialSync, usePrayerCountdown, usePrayers, useSelectedCity } from "@/src/features/prayers/hooks";
+import { prayersAtom, prayersErrorAtom, prayersLoadingAtom, timingsAtom } from "@/src/features/prayers/store/prayersStore";
 import { useRouter } from "expo-router";
+import { useAtom } from "jotai";
 import {
   Bell,
   ChevronLeft,
@@ -35,8 +37,14 @@ export default function Prayers() {
   const { selectedCity } = useSelectedCity();
   const { isInitialSyncLoading } = useInitialSync();
   
-  // Fetch prayers using the hook
-  const { prayers, timings, loading, error } = usePrayers(selectedCity);
+  // Trigger data fetch when selectedCity changes
+  usePrayers(selectedCity);
+  
+  // Use atoms directly
+  const [prayers] = useAtom(prayersAtom);
+  const [timings] = useAtom(timingsAtom);
+  const [loading] = useAtom(prayersLoadingAtom);
+  const [error] = useAtom(prayersErrorAtom);
   
   // Get countdown timer
   const countdown = usePrayerCountdown(timings);

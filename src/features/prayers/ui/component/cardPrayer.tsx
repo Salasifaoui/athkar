@@ -8,7 +8,9 @@ import { Spinner } from "@/components/ui/spinner";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
 import { usePrayerCountdown, usePrayers, useSelectedCity } from "@/src/features/prayers/hooks";
+import { currentDayAtom, prayersAtom, prayersLoadingAtom, timingsAtom } from "@/src/features/prayers/store/prayersStore";
 import { renderNameMonth, renderNameMonthHijri } from "@/src/utils/utils";
+import { useAtom } from "jotai";
 import { ChevronLeft, ChevronRight, Clock, Stars } from "lucide-react-native";
 import { useMemo } from "react";
 import { View } from "react-native";
@@ -20,8 +22,14 @@ interface CardPrayerProps {
 
 export default function CardPrayer({ currentDate, onDateChange }: CardPrayerProps) {
   const { selectedCity } = useSelectedCity();
-  // Fetch prayers for the selected date
-  const { prayers, timings, loading, currentDay} = usePrayers(selectedCity, currentDate);
+  // Trigger data fetch for the selected date
+  usePrayers(selectedCity, currentDate);
+  
+  // Use atoms directly
+  const [prayers] = useAtom(prayersAtom);
+  const [timings] = useAtom(timingsAtom);
+  const [loading] = useAtom(prayersLoadingAtom);
+  const [currentDay] = useAtom(currentDayAtom);
 
   const isToday = currentDate.toDateString() === new Date().toDateString();
   const countdown = usePrayerCountdown(isToday ? timings : null);

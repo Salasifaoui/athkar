@@ -6,7 +6,7 @@ import "../global.css";
 import { useColorScheme } from "@/src/hooks/useColorSchema";
 
 import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
-import { useSetupDatabase } from "@/src/features/prayers/db/start";
+import { hasAnyPrayerTimesInDB, useSetupDatabase } from "@/src/features/prayers/db/start";
 import { InitialSyncProvider, SelectedCityProvider, useInitialSync, useSelectedCity } from "@/src/features/prayers/hooks";
 import { prayerService } from "@/src/features/prayers/services/prayerService";
 import * as Network from 'expo-network';
@@ -48,11 +48,11 @@ function NetworkSyncHandler() {
       
       try {
         // Check if database already has data
-        // const hasData = await hasAnyPrayerTimesInDB();
-        // if (hasData) {
-        //   // Database has data, no need to fetch
-        //   return;
-        // }
+        const hasData = await hasAnyPrayerTimesInDB();
+        if (hasData) {
+          // Database has data, no need to fetch
+          return;
+        }
 
         // Check network connection
         const state = await Network.getNetworkStateAsync();
