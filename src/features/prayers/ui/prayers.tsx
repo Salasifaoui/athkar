@@ -5,7 +5,7 @@ import { Icon } from "@/components/ui/icon";
 import { Spinner } from "@/components/ui/spinner";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
-import { usePrayerCountdown, usePrayers, useSelectedCity } from "@/src/features/prayers/hooks";
+import { useInitialSync, usePrayerCountdown, usePrayers, useSelectedCity } from "@/src/features/prayers/hooks";
 import { useRouter } from "expo-router";
 import {
   Bell,
@@ -17,7 +17,7 @@ import {
   Sunset,
   Timer,
 } from "lucide-react-native";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ScrollView } from "react-native";
 
 // Prayer icons mapping
@@ -31,13 +31,21 @@ const prayerIcons = {
 
 export default function Prayers() {
   const router = useRouter();
+  const [city, setCity] = useState<string | null>(null);
   const { selectedCity } = useSelectedCity();
+  const { isInitialSyncLoading } = useInitialSync();
   
   // Fetch prayers using the hook
   const { prayers, timings, loading, error } = usePrayers(selectedCity);
   
   // Get countdown timer
   const countdown = usePrayerCountdown(timings);
+
+  useEffect(() => {
+    if (selectedCity.apiName) {
+      setCity(selectedCity.apiName);
+    }
+  }, [selectedCity.apiName]);
 
   // Find current and next prayer indices
   const { currentPrayerIndex, nextPrayerIndex } = useMemo(() => {
@@ -108,22 +116,32 @@ export default function Prayers() {
     return `${minutes}د`;
   };
 
-  // Show loading state
-  if (loading) {
+  // Show loading state (during initial sync or when loading prayers)
+  if (loading || isInitialSyncLoading) {
     return (
       <VStack className="flex-1 gap-4 items-center justify-center p-8">
         <Spinner size="large" />
-        <Text className="text-primary-500">جاري تحميل أوقات الصلاة...</Text>
       </VStack>
     );
   }
 
   // Show error state
-  if (error || !prayers.length) {
+  if (error) {
     return (
       <VStack className="flex-1 gap-4 items-center justify-center p-8">
         <Text className="text-red-500 text-center">
-          {error || "فشل في جلب أوقات الصلاة"}
+          {error}
+        </Text>
+      </VStack>
+    );
+  }
+
+  // Show no data state
+  if (!prayers.length) {
+    return (
+      <VStack className="flex-1 gap-4 items-center justify-center p-8">
+        <Text className="text-gray-500 text-center text-lg">
+          لا توجد بيانات
         </Text>
       </VStack>
     );
@@ -228,16 +246,16 @@ export default function Prayers() {
             />
           </HStack>
         </HStack>
-        <HStack className="items-center gap-2 flex-1 justify-center">
-          <HStack className="bg-primary-100 rounded-xl p-2 items-center gap-2">
-            <Icon
-              as={MapPin}
-              size={16}
-              className="stroke-foreground text-primary-500"
-            />
-            <Text className="text-sm text-primary-500">{selectedCity.apiName}</Text>
-          </HStack>
-        </HStack>
+          {selectedCity.apiName ? <HStack className="items-center gap-2 flex-1 justify-center">
+            <HStack className="bg-primary-100 rounded-xl p-2 items-center gap-2">
+              <Icon
+                as={MapPin}
+                size={16}
+                className="stroke-foreground text-primary-500"
+              />
+              <Text className="text-sm text-primary-500">{selectedCity.apiName}</Text>
+            </HStack>
+          </HStack> : <Spinner size="large" />}
       </VStack>
 
       {/* Content: Horizontal Scrollable List */}

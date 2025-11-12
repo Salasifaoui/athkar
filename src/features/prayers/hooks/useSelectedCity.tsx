@@ -37,4 +37,3 @@ export function useSelectedCity() {
   }
   return context;
 }
-

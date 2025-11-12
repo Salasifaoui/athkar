@@ -8,6 +8,7 @@ import { Spinner } from "@/components/ui/spinner";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
 import { usePrayerCountdown, usePrayers, useSelectedCity } from "@/src/features/prayers/hooks";
+import { renderNameMonth, renderNameMonthHijri } from "@/src/utils/utils";
 import { ChevronLeft, ChevronRight, Clock, Stars } from "lucide-react-native";
 import { useMemo } from "react";
 import { View } from "react-native";
@@ -20,30 +21,28 @@ interface CardPrayerProps {
 export default function CardPrayer({ currentDate, onDateChange }: CardPrayerProps) {
   const { selectedCity } = useSelectedCity();
   // Fetch prayers for the selected date
-  const { prayers, timings, loading, currentDay } = usePrayers(selectedCity, currentDate);
+  const { prayers, timings, loading, currentDay} = usePrayers(selectedCity, currentDate);
 
-  console.log('currentDay',JSON.stringify(currentDay, null, 2));
-  
-  // Get countdown timer (only for today)
   const isToday = currentDate.toDateString() === new Date().toDateString();
   const countdown = usePrayerCountdown(isToday ? timings : null);
 
+
+
   // Format Gregorian date
   const formatGregorianDate = () => {
-    const day = currentDay?.gregorian.day;
-    const month = currentDay?.gregorian.month.en;
-    const year = currentDay?.gregorian.year;
+
+    const day = currentDay?.day?.split('-')[0];
+    const month = renderNameMonth(currentDay?.day || "")
+    const year = currentDay?.day?.split('-')[2];
     return `${day} ${month} ${year}`;
   };
 
   // Format Hijri date (simplified - in production, use a proper Hijri calendar library)
   const formatHijriDate = () => {
-    if (!currentDay) {
-      return '';
-    }
-    const hijriYear = currentDay.hijri.year;
-    const hijriMonth = currentDay.hijri.month.ar;
-    const hijriDay = currentDay.hijri.day;
+
+    const hijriYear = currentDay?.date_hijri?.split('-')[2];
+    const hijriMonth = renderNameMonthHijri(currentDay?.date_hijri || '');
+    const hijriDay = currentDay?.date_hijri?.split('-')[0];
     return `${hijriDay} ${hijriMonth} ${hijriYear}`;
   };
 

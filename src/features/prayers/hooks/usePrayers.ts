@@ -1,6 +1,6 @@
 import { City } from '@/src/types/city';
-import { Hijri } from '@/src/types/hijri';
 import { useEffect, useState } from 'react';
+import { getPrayerTimesFromDB } from '../db/start';
 import { prayerService, PrayerTimings } from '../services/prayerService';
 
 export interface Prayer {
@@ -24,11 +24,13 @@ export function usePrayers(selectedCity: City | null, date?: Date) {
   const [timings, setTimings] = useState<PrayerTimings | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [currentDay, setCurrentDay] = useState<Hijri | null>(null);
+  const [currentDay, setCurrentDay] = useState<{ day: string, date_hijri: string } | null>(null);
+
   useEffect(() => {
     if (!selectedCity) {
       setPrayers([]);
       setTimings(null);
+      setCurrentDay(null);
       return;
     }
 
@@ -36,10 +38,15 @@ export function usePrayers(selectedCity: City | null, date?: Date) {
       setLoading(true);
       setError(null);
       try {
-        const fetchedTimings = await prayerService.getPrayers(selectedCity, date);
-        const formattedPrayers = formatPrayerTimings(fetchedTimings);
-        setPrayers(formattedPrayers);
-        setTimings(fetchedTimings);
+        const fetchedTimings = await getPrayerTimesFromDB(date || new Date());
+        if (fetchedTimings) {
+          const formattedPrayers = formatPrayerTimings(fetchedTimings);
+          setPrayers(formattedPrayers);
+          setTimings(fetchedTimings);
+        } else {
+          setPrayers([]);
+          setTimings(null);
+        }
       } catch (err) {
         setError(err instanceof Error ? err.message : 'فشل في جلب أوقات الصلاة');
         setPrayers([]);
@@ -50,8 +57,21 @@ export function usePrayers(selectedCity: City | null, date?: Date) {
     };
 
     const fetchCurrentDay = async () => {
-      const currentDay = await prayerService.getCurrentDayHijri(date || new Date());
-      setCurrentDay(currentDay);
+      try {
+        const dateGregorianAndHijri = await prayerService.getCurrentDayGregorianAndHijri(date || new Date());
+        console.log('dateGregorianAndHijri',JSON.stringify(dateGregorianAndHijri, null, 2));
+        if (dateGregorianAndHijri) {
+          setCurrentDay({
+            day: dateGregorianAndHijri.date || '',
+            date_hijri: dateGregorianAndHijri.date_hijri || '',
+          });
+        } else {
+          setCurrentDay(null);
+        }
+      } catch (err) {
+        console.error('Error fetching Hijri date:', err);
+        setCurrentDay(null);
+      }
     };
 
     fetchPrayers();
@@ -67,7 +87,7 @@ function formatPrayerTimings(timings: PrayerTimings): Prayer[] {
 
   prayerOrder.forEach((prayerKey) => {
     const time = timings[prayerKey];
-    if (time) {
+    if (time && typeof time === 'string') {
       // Convert from "HH:MM (24h)" to "HH:MM" format
       const timeOnly = time.split(' ')[0];
       formatted.push({

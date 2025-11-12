@@ -17,13 +17,7 @@ export default function TabsLayout() {
           tabBarLabel: 'Home',
         }}
       />
-      <Tabs.Screen
-        name="community"
-        options={{
-          title: 'Community',
-          tabBarLabel: 'Community',
-        }}
-      />
+    
       <Tabs.Screen
         name="historique"
         options={{

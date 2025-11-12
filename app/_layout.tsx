@@ -6,7 +6,10 @@ import "../global.css";
 import { useColorScheme } from "@/src/hooks/useColorSchema";
 
 import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
-import { SelectedCityProvider } from "@/src/features/prayers/hooks";
+import { useSetupDatabase } from "@/src/features/prayers/db/start";
+import { InitialSyncProvider, SelectedCityProvider, useInitialSync, useSelectedCity } from "@/src/features/prayers/hooks";
+import { prayerService } from "@/src/features/prayers/services/prayerService";
+import { useEffect, useRef } from "react";
 
 
 export const unstable_settings = {
@@ -27,14 +30,73 @@ const StackLayout = () => {
   );
 };
 
+function NetworkSyncHandler() {
+  const { selectedCity } = useSelectedCity();
+  const { setInitialSyncLoading } = useInitialSync();
+  const hasCheckedRef = useRef(false);
+  useEffect(() => {
+    const checkAndSync = async () => {
+      if (selectedCity) {
+        await prayerService.preloadSevenDays(selectedCity);
+      }
+    };
+    checkAndSync();
+  }, []);
+
+  // useEffect(() => {
+  //   // Only check network connection once when app opens
+  //   if (hasCheckedRef.current || !selectedCity) {
+  //     return;
+  //   }
+
+  //   const checkAndSync = async () => {
+  //     hasCheckedRef.current = true;
+      
+  //     try {
+  //       // Check if database already has data
+  //       // const hasData = await hasAnyPrayerTimesInDB();
+  //       // if (hasData) {
+  //       //   // Database has data, no need to fetch
+  //       //   return;
+  //       // }
+
+  //       // Check network connection
+  //       const state = await Network.getNetworkStateAsync();
+  //       const isConnected = (state.isConnected ?? false) && (state.isInternetReachable ?? false);
+        
+  //       if (isConnected && selectedCity) {
+  //         setInitialSyncLoading(true);
+  //         // Fetch 7 days of prayer times from API
+  //         await prayerService.preloadSevenDays(selectedCity);
+  //         console.log('✅ Preloaded seven days of prayer times');
+  //       }
+  //     } catch (error) {
+  //       console.error('❌ Error syncing database:', error);
+  //     } finally {
+  //       setInitialSyncLoading(false);
+  //     }
+  //   };
+
+  //   checkAndSync();
+  // }, [selectedCity, setInitialSyncLoading]);
+
+  return null;
+}
+
 export default function RootLayout() {
   const { isDarkColorScheme } = useColorScheme();
+  
+  // Initialize database
+  useSetupDatabase();
 
   return (
     <AuthProvider>
       <GluestackUIProvider mode={isDarkColorScheme ? "dark" : "light"}>
         <SelectedCityProvider>
-          <StackLayout />
+          <InitialSyncProvider>
+            <NetworkSyncHandler />
+            <StackLayout />
+          </InitialSyncProvider>
         </SelectedCityProvider>
        
         <StatusBar

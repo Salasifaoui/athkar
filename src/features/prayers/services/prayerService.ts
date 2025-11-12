@@ -1,14 +1,26 @@
 import { City } from '@/src/types/city';
 import { Hijri } from '@/src/types/hijri';
-import axios from 'axios';
+import {
+  getDateGregorianAndHijriFromDB,
+  saveSevenDaysPrayerTimes
+} from '../db/start';
+
+
 export interface PrayerTimings {
+  date_hijri?: Hijri["hijri"];
+  date?: Hijri["gregorian"];
   Fajr: string;
   Sunrise?: string;
   Dhuhr: string;
   Asr: string;
   Maghrib: string;
   Isha: string;
-  [key: string]: string | undefined;
+  [key: string]: string | Hijri["hijri"] | Hijri["gregorian"] | undefined;
+}
+
+// Type guard to check if a prayer timing value is a string
+function isPrayerTimeString(value: string | Hijri["hijri"] | Hijri["gregorian"] | undefined): value is string {
+  return typeof value === 'string';
 }
 
 export interface CountdownTimer {
@@ -52,7 +64,7 @@ const getNextPrayerIndex = (timings: PrayerTimings): number => {
   for (let i = 0; i < prayerOrder.length; i++) {
     const prayerKey = prayerOrder[i];
     const prayerTime = timings[prayerKey];
-    if (prayerTime) {
+    if (prayerTime && isPrayerTimeString(prayerTime)) {
       const prayerMinutes = timeToMinutes(prayerTime);
       if (currentMinutes < prayerMinutes) {
         return i;
@@ -64,21 +76,22 @@ const getNextPrayerIndex = (timings: PrayerTimings): number => {
 };
 
 export const prayerService = {
-  getPrayers: async (selectedCity: City, date?: Date) => {
-    const dateParam = date 
-      ? `&date=${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`
-      : '';
-    const response = await axios.get(
-      `https://api.aladhan.com/v1/timingsByCity?country=${selectedCity.country}&city=${selectedCity.apiName}${dateParam}`
-    );
-    return response.data.data.timings as PrayerTimings;
+  preloadSevenDays: async (selectedCity: City): Promise<void> => {
+    try {
+      console.log("preloadSevenDays")
+      await saveSevenDaysPrayerTimes(selectedCity);
+    } catch (error) {
+      console.error('Error preloading seven days of prayer times:', error);
+      throw error;
+    }
   },
   
   setupCountdownTimer: (timings: PrayerTimings): CountdownTimer => {
     const prayerOrder = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
     const nextPrayerIndex = getNextPrayerIndex(timings);
     const nextPrayerKey = prayerOrder[nextPrayerIndex];
-    const nextPrayerTime = timings[nextPrayerKey] || '';
+    const nextPrayerTimeValue = timings[nextPrayerKey];
+    const nextPrayerTime = (nextPrayerTimeValue && isPrayerTimeString(nextPrayerTimeValue)) ? nextPrayerTimeValue : '';
     
     // Get current time
     const now = new Date();
@@ -124,10 +137,10 @@ export const prayerService = {
       isNextDay: isNextDay || diffMs < 0,
     };
   },
-  getCurrentDayHijri: async (date: Date) => {
-    const response = await axios.get(
-      `https://api.aladhan.com/v1/hToG?${date}`
-    );
-    return response.data.data as Hijri;
+ 
+  getCurrentDayGregorianAndHijri: async (date: Date) => {
+    const result = await getDateGregorianAndHijriFromDB(date);
+    // const result = await getPrayerTimesFromDBAllDates();
+    return result;
   },
 };
