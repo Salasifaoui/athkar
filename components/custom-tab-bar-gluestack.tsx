@@ -3,11 +3,15 @@ import { HStack } from '@/components/ui/hstack';
 import { Icon } from '@/components/ui/icon';
 import { Pressable } from '@/components/ui/pressable';
 import { Text } from '@/components/ui/text';
-import { useColorScheme } from '@/hooks/use-color-scheme';
-import { THEME } from '@/src/theme/theme';
-import { History, Home, Star, User } from 'lucide-react-native';
-import React from 'react';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { BookAIcon, Home, Settings } from 'lucide-react-native';
+import React, { useEffect } from 'react';
+import Animated, {
+  interpolate,
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+  withTiming,
+} from 'react-native-reanimated';
 
 interface TabBarProps {
   state: any;
@@ -15,27 +19,24 @@ interface TabBarProps {
   navigation: any;
 }
 
+const AnimatedHStack = Animated.createAnimatedComponent(HStack);
+const AnimatedText = Animated.createAnimatedComponent(Text);
+
 export function CustomTabBarGluestack({ state, descriptors, navigation }: TabBarProps) {
-  const colorScheme = useColorScheme();
-  const theme = THEME[colorScheme ?? 'light'];
-  const insets = useSafeAreaInsets();
-  const activeColor = theme.primary;
-  const inactiveColor = theme.mutedForeground;
+  const activeColor = 'white';
+  const inactiveColor = 'white';
 
   const getTabIcon = (routeName: string, focused: boolean) => {
     const color = focused ? activeColor : inactiveColor;
-    
     switch (routeName) {
       case 'home':
-        return <Icon as={Home} size={24} color={color} />;
-      case 'community':
-        return <Icon as={Star} size={24} color={color} />;
-      case 'historique':
-        return <Icon as={History} size={24} color={color} />;
-      case 'profile':
-        return <Icon as={User} size={24} color={color} />;
+        return <Icon as={Home} size={20} color={color} />;
+      case 'athkar':
+        return <Icon as={BookAIcon} size={20} color={color} />;
+      case 'setting':
+        return <Icon as={Settings} size={20} color={color} />;
       default:
-        return <Icon as={Home} size={24} color={color} />;
+        return <Icon as={Home} size={20} color={color} />;
     }
   };
 
@@ -43,12 +44,10 @@ export function CustomTabBarGluestack({ state, descriptors, navigation }: TabBar
     switch (routeName) {
       case 'home':
         return 'Home';
-      case 'community':
-        return 'Community';
-      case 'historique':
-        return 'Historique';
-      case 'profile':
-        return 'Profile';
+      case 'athkar':
+        return 'أذكار';
+      case 'settings':
+        return 'الإعدادات';
       default:
         return routeName;
     }
@@ -56,13 +55,7 @@ export function CustomTabBarGluestack({ state, descriptors, navigation }: TabBar
 
   return (
     <Box
-      style={{
-        backgroundColor: theme.background,
-        borderTopWidth: 1,
-        borderTopColor: theme.border,
-        paddingBottom: Math.max(insets.bottom, 8),
-        paddingTop: 8,
-      }}
+    className="absolute bottom-0 left-0 right-0 bg-primary-500 rounded-3xl p-2 mb-8 mx-4"
     >
       <HStack className="flex-row items-center justify-around">
         {state.routes.map((route: any, index: number) => {
@@ -95,31 +88,125 @@ export function CustomTabBarGluestack({ state, descriptors, navigation }: TabBar
           };
 
           return (
-            <Pressable
+            <TabButton
               key={route.key}
+              isFocused={isFocused}
+              label={label}
+              icon={getTabIcon(route.name, isFocused)}
+              onPress={onPress}
+              onLongPress={onLongPress}
               accessibilityRole="button"
               accessibilityState={isFocused ? { selected: true } : {}}
               accessibilityLabel={options.tabBarAccessibilityLabel}
               testID={options.tabBarTestID}
-              onPress={onPress}
-              onLongPress={onLongPress}
-              className="flex-1 items-center justify-center py-2"
-            >
-              <Box className="items-center justify-center">
-                {getTabIcon(route.name, isFocused)}
-                <Text
-                  size="xs"
-                  className="mt-1"
-                  style={{ color: isFocused ? activeColor : inactiveColor }}
-                >
-                  {label}
-                </Text>
-              </Box>
-            </Pressable>
+            />
           );
         })}
       </HStack>
     </Box>
+  );
+}
+
+interface TabButtonProps {
+  isFocused: boolean;
+  label: string;
+  icon: React.ReactNode;
+  onPress: () => void;
+  onLongPress: () => void;
+  accessibilityRole?: string;
+  accessibilityState?: { selected?: boolean };
+  accessibilityLabel?: string;
+  testID?: string;
+}
+
+function TabButton({
+  isFocused,
+  label,
+  icon,
+  onPress,
+  onLongPress,
+  accessibilityRole,
+  accessibilityState,
+  accessibilityLabel,
+  testID,
+}: TabButtonProps) {
+  const scale = useSharedValue(isFocused ? 1 : 0.95);
+  const opacity = useSharedValue(isFocused ? 1 : 0.7);
+  const textOpacity = useSharedValue(isFocused ? 1 : 0);
+  const backgroundScale = useSharedValue(isFocused ? 1 : 0);
+
+  useEffect(() => {
+    scale.value = withSpring(isFocused ? 1 : 0.95, {
+      damping: 18,
+      stiffness: 200,
+    });
+    opacity.value = withTiming(isFocused ? 1 : 0.7, { duration: 200 });
+    textOpacity.value = withTiming(isFocused ? 1 : 0, { duration: 300 });
+    backgroundScale.value = withSpring(isFocused ? 1 : 0, {
+      damping: 20,
+      stiffness: 300,
+    });
+  }, [isFocused, scale, opacity, textOpacity, backgroundScale]);
+
+  const animatedContainerStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: scale.value }],
+      opacity: opacity.value,
+    };
+  });
+
+  const animatedTextStyle = useAnimatedStyle(() => {
+    return {
+      opacity: textOpacity.value,
+    };
+  });
+
+  const animatedBackgroundStyle = useAnimatedStyle(() => {
+    return {
+      opacity: backgroundScale.value,
+      transform: [
+        {
+          scale: interpolate(backgroundScale.value, [0, 1], [0.8, 1]),
+        },
+      ],
+    };
+  });
+
+  return (
+    <Pressable
+      accessibilityRole={accessibilityRole as any}
+      accessibilityState={accessibilityState}
+      accessibilityLabel={accessibilityLabel}
+      testID={testID}
+      onPress={onPress}
+      onLongPress={onLongPress}
+      className="flex-1 items-center justify-center"
+    >
+      <AnimatedHStack
+        className="items-center justify-center gap-2"
+        style={animatedContainerStyle}
+      >
+        {isFocused ? (
+          <AnimatedHStack
+            className="items-center justify-center gap-2 bg-primary-400 rounded-full p-2 px-4"
+            style={animatedBackgroundStyle}
+          >
+            <AnimatedText
+              size="md"
+              className="text-center text-white"
+              style={animatedTextStyle}
+            >
+              {label}
+            </AnimatedText>
+            {icon}
+          </AnimatedHStack>
+        ) : (
+          <HStack className="items-center justify-center gap-2">
+            {icon}
+          </HStack>
+        )}
+      </AnimatedHStack>
+    </Pressable>
   );
 }
 

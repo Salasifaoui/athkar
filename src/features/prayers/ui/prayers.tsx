@@ -140,9 +140,7 @@ export default function Prayers() {
   if (!prayers.length) {
     return (
       <VStack className="flex-1 gap-4 items-center justify-center p-8">
-        <Text className="text-gray-500 text-center text-lg">
-          لا توجد بيانات
-        </Text>
+        <Spinner size="large" />
       </VStack>
     );
   }

@@ -13,18 +13,26 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="home"
         options={{
-          title: 'Home',
-          tabBarLabel: 'Home',
+          title: 'الرئيسية',
+          tabBarLabel: 'الرئيسية',
         }}
       />
     
-      <Tabs.Screen
-        name="historique"
-        options={{
-          title: 'Historique',
-          tabBarLabel: 'Historique',
-        }}
-      />
+        <Tabs.Screen
+          name="athkar"
+          options={{
+            title: 'أذكار',
+            tabBarLabel: 'أذكار',
+          }}
+        />
+        <Tabs.Screen
+          name="setting"
+          options={{
+            title: 'الإعدادات',
+            tabBarLabel: 'الإعدادات',
+          }}
+        />
+
     </Tabs>
   );
 }

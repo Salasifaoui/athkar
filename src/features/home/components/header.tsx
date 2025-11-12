@@ -26,7 +26,7 @@ const fakeData = {
 export default function Header() {
   const [data] = useState(fakeData);
   const { selectedCity } = useSelectedCity();
-  const { currentDay } = usePrayers(selectedCity, new Date());
+  const { currentDay, loading } = usePrayers(selectedCity, new Date());
 
 
   return (
@@ -67,7 +67,7 @@ export default function Header() {
           </HStack>
 
           {/* Right: Date boxes (day, month, year) */}
-          {currentDay !== null ? (
+          { !loading ? (
             <VStack className="gap-2">
               <HStack className="gap-2">
                 <VStack className="gap-2">
