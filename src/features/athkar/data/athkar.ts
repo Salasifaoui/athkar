@@ -1,7 +1,48 @@
+import { AlertCircle, AlertTriangle, Apple, ArrowDown, ArrowUp, Bell, Bird, BookOpen, Brain, Building, Car, CheckCircle, CloudRain, DollarSign, DoorClosed, DoorOpen, Droplet, Droplets, Drumstick, Eye, Hand, Heart, HelpCircle, Home, LogOut, MapPin, Moon, Navigation, Plane, Shield, Shirt, ShoppingCart, Smile, Star, Sun, Sunrise, Sunset, Sword, Utensils, Volume2, Wind, Zap } from "lucide-react-native";
+export const colors = [
+	{
+		id: 1,
+		colorLow: "#FFC4C4",
+		colorHigh: "#EE6983",
+	},
+	{
+		id: 2,
+		colorLow: "#87BAC3",
+		colorHigh: "#D6F4ED",
+	},
+	{
+		id: 3,
+		colorLow: "#658C58",
+		colorHigh: "#31694E",
+	},
+	{
+		id: 4,
+		colorLow: "#8FABD4",
+		colorHigh: "#4A70A9",
+	},
+	{
+		id: 5,
+		colorLow: "#FFA4A4",
+		colorHigh: "#FFBDBD",
+	},
+	{
+		id: 6,
+		colorLow: "#FFF0DD",
+		colorHigh: "#D1D3D4",
+	},
+	{
+		id: 7,
+		colorLow: "#FFECC0",
+		colorHigh: "#FFC29B",
+	},
+]
 export const athkar = [
 	{
 		"id": 1,
 		"category": "أذكار الصباح والمساء",
+		"icon": Sunrise,
+		"colorLow": "#FFC4C4",
+		"colorHigh": "#EE6983",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_028.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_028",
 		"array": [
@@ -178,6 +219,9 @@ export const athkar = [
 	{
 		"id": 2,
 		"category": "أذكار النوم",
+		"icon": Moon,
+		"colorLow": "#87BAC3",
+		"colorHigh": "#D6F4ED",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_029.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_029",
 		"array": [
@@ -277,6 +321,9 @@ export const athkar = [
 	{
 		"id": 3,
 		"category": "أذكار الاستيقاظ من النوم",
+		"icon": Sun,
+		"colorLow": "#658C58",
+		"colorHigh": "#31694E",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_002.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_002",
 		"array": [
@@ -313,6 +360,9 @@ export const athkar = [
 	{
 		"id": 4,
 		"category": "دعاء دخول الخلاء",
+		"icon": DoorOpen,
+		"colorLow": "#8FABD4",
+		"colorHigh": "#4A70A9",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_007.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_007",
 		"array": [
@@ -328,6 +378,9 @@ export const athkar = [
 	{
 		"id": 5,
 		"category": "دعاء الخروج من الخلاء",
+		"icon": DoorClosed,
+		"colorLow": "#FFA4A4",
+		"colorHigh": "#FFBDBD",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_008.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_008",
 		"array": [
@@ -343,6 +396,9 @@ export const athkar = [
 	{
 		"id": 6,
 		"category": "الذكر قبل الوضوء",
+		"icon": Droplet,
+		"colorLow": "#FFF0DD",
+		"colorHigh": "#D1D3D4",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_009.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_009",
 		"array": [
@@ -358,6 +414,9 @@ export const athkar = [
 	{
 		"id": 7,
 		"category": "الذكر بعد الفراغ من الوضوء",
+		"icon": Droplets,
+		"colorLow": "#FFECC0",
+		"colorHigh": "#FFC29B",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_010.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_010",
 		"array": [
@@ -387,6 +446,9 @@ export const athkar = [
 	{
 		"id": 8,
 		"category": "الذكر عند الخروج من المنزل",
+		"icon": Home,
+		"colorLow": "#FFC4C4",
+		"colorHigh": "#EE6983",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_011.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_011",
 		"array": [
@@ -409,6 +471,9 @@ export const athkar = [
 	{
 		"id": 9,
 		"category": "الذكر عند دخول المنزل",
+		"icon": Home,
+		"colorLow": "#87BAC3",
+		"colorHigh": "#D6F4ED",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_012.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_012",
 		"array": [
@@ -424,6 +489,9 @@ export const athkar = [
 	{
 		"id": 10,
 		"category": "دعاء الذهاب إلى المسجد",
+		"icon": Navigation,
+		"colorLow": "#658C58",
+		"colorHigh": "#31694E",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_013.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_013",
 		"array": [
@@ -439,6 +507,9 @@ export const athkar = [
 	{
 		"id": 11,
 		"category": "دعاء دخول المسجد",
+		"icon": Building,
+		"colorLow": "#8FABD4",
+		"colorHigh": "#4A70A9",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_014.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_014",
 		"array": [
@@ -454,6 +525,9 @@ export const athkar = [
 	{
 		"id": 12,
 		"category": "دعاء الخروج من المسجد",
+		"icon": LogOut,
+		"colorLow": "#FFA4A4",
+		"colorHigh": "#FFBDBD",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_015.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_015",
 		"array": [
@@ -469,6 +543,9 @@ export const athkar = [
 	{
 		"id": 13,
 		"category": "أذكار الآذان",
+		"icon": Bell,
+		"colorLow": "#FFF0DD",
+		"colorHigh": "#D1D3D4",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_016.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_016",
 		"array": [
@@ -512,6 +589,9 @@ export const athkar = [
 	{
 		"id": 14,
 		"category": "دعاء ُلبْس الثوب",
+		"icon": Shirt,
+		"colorLow": "#FFECC0",
+		"colorHigh": "#FFC29B",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_003.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_003",
 		"array": [
@@ -527,6 +607,9 @@ export const athkar = [
 	{
 		"id": 15,
 		"category": "دعاء ُلبْس الثوب الجديد",
+		"icon": Shirt,
+		"colorLow": "#FFC4C4",
+		"colorHigh": "#EE6983",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_004.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_004",
 		"array": [
@@ -542,6 +625,9 @@ export const athkar = [
 	{
 		"id": 16,
 		"category": "الدعاء لمن لبس ثوبا جديدا",
+		"icon": Shirt,
+		"colorLow": "#87BAC3",
+		"colorHigh": "#D6F4ED",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_005.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_005",
 		"array": [
@@ -564,6 +650,9 @@ export const athkar = [
 	{
 		"id": 17,
 		"category": "ما يقول إذا وضع ثوبه",
+		"icon": Shirt,
+		"colorLow": "#658C58",
+		"colorHigh": "#31694E",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_006.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_006",
 		"array": [
@@ -579,6 +668,9 @@ export const athkar = [
 	{
 		"id": 18,
 		"category": "دعاء الاستفتاح",
+		"icon": Hand,
+		"colorLow": "#8FABD4",
+		"colorHigh": "#4A70A9",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_017.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_017",
 		"array": [
@@ -629,6 +721,9 @@ export const athkar = [
 	{
 		"id": 19,
 		"category": "دعاء الركوع",
+		"icon": ArrowDown,
+		"colorLow": "#FFA4A4",
+		"colorHigh": "#FFBDBD",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_018.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_018",
 		"array": [
@@ -672,6 +767,9 @@ export const athkar = [
 	{
 		"id": 20,
 		"category": "دعاء الرفع من الركوع",
+		"icon": ArrowUp,
+		"colorLow": "#FFF0DD",
+		"colorHigh": "#D1D3D4",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_019.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_019",
 		"array": [
@@ -701,6 +799,9 @@ export const athkar = [
 	{
 		"id": 21,
 		"category": "دعاء السجود",
+		"icon": ArrowDown,
+		"colorLow": "#FFECC0",
+		"colorHigh": "#FFC29B",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_020.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_020",
 		"array": [
@@ -758,6 +859,9 @@ export const athkar = [
 	{
 		"id": 22,
 		"category": "دعاء الجلسة بين السجدتين",
+		"icon": ArrowUp,
+		"colorLow": "#FFC4C4",
+		"colorHigh": "#EE6983",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_021.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_021",
 		"array": [
@@ -780,6 +884,9 @@ export const athkar = [
 	{
 		"id": 23,
 		"category": "دعاء سجود التلاوة",
+		"icon": BookOpen,
+		"colorLow": "#87BAC3",
+		"colorHigh": "#D6F4ED",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_022.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_022",
 		"array": [
@@ -802,6 +909,9 @@ export const athkar = [
 	{
 		"id": 24,
 		"category": "التشهد",
+		"icon": Hand,
+		"colorLow": "#658C58",
+		"colorHigh": "#31694E",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_023.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_023",
 		"array": [
@@ -817,6 +927,9 @@ export const athkar = [
 	{
 		"id": 25,
 		"category": "الصلاة على النبي بعد التشهد",
+		"icon": Heart,
+		"colorLow": "#8FABD4",
+		"colorHigh": "#4A70A9",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_024.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_024",
 		"array": [
@@ -839,6 +952,9 @@ export const athkar = [
 	{
 		"id": 26,
 		"category": "الدعاء بعد التشهد الأخير قبل السلام",
+		"icon": Hand,
+		"colorLow": "#FFA4A4",
+		"colorHigh": "#FFBDBD",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_025.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_025",
 		"array": [
@@ -924,6 +1040,9 @@ export const athkar = [
 	{
 		"id": 27,
 		"category": "الأذكار بعد السلام من الصلاة",
+		"icon": CheckCircle,
+		"colorLow": "#FFF0DD",
+		"colorHigh": "#D1D3D4",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_026.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_026",
 		"array": [
@@ -988,6 +1107,9 @@ export const athkar = [
 	{
 		"id": 28,
 		"category": "دعاء صلاة الاستخارة",
+		"icon": BookOpen,
+		"colorLow": "#FFECC0",
+		"colorHigh": "#FFC29B",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_027.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_027",
 		"array": [
@@ -1003,6 +1125,9 @@ export const athkar = [
 	{
 		"id": 29,
 		"category": "الدعاء إذا تقلب ليلا",
+		"icon": BookOpen,
+		"colorLow": "#FFC4C4",
+		"colorHigh": "#EE6983",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_030.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_030",
 		"array": [
@@ -1018,6 +1143,9 @@ export const athkar = [
 	{
 		"id": 30,
 		"category": "دعاء الفزع في النوم و من بُلِيَ بالوحشة",
+		"icon": BookOpen,
+		"colorLow": "#87BAC3",
+		"colorHigh": "#D6F4ED",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_031.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_031",
 		"array": [
@@ -1033,6 +1161,9 @@ export const athkar = [
 	{
 		"id": 31,
 		"category": "ما يفعل من رأى الرؤيا أو الحلم",
+		"icon": BookOpen,
+		"colorLow": "#658C58",
+		"colorHigh": "#31694E",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_032.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_032",
 		"array": [
@@ -1055,6 +1186,9 @@ export const athkar = [
 	{
 		"id": 32,
 		"category": "دعاء قنوت الوتر",
+		"icon": Moon,
+		"colorLow": "#8FABD4",
+		"colorHigh": "#4A70A9",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_033.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_033",
 		"array": [
@@ -1084,6 +1218,9 @@ export const athkar = [
 	{
 		"id": 33,
 		"category": "الذكر عقب السلام من الوتر",
+		"icon": Moon,
+		"colorLow": "#FFA4A4",
+		"colorHigh": "#FFBDBD",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_034.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_034",
 		"array": [
@@ -1099,6 +1236,9 @@ export const athkar = [
 	{
 		"id": 34,
 		"category": "دعاء الهم والحزن",
+		"icon": Heart,
+		"colorLow": "#FFF0DD",
+		"colorHigh": "#D1D3D4",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_035.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_035",
 		"array": [
@@ -1121,6 +1261,9 @@ export const athkar = [
 	{
 		"id": 35,
 		"category": "دعاء الكرب",
+		"icon": AlertCircle,
+		"colorLow": "#FFECC0",
+		"colorHigh": "#FFC29B",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_036.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_036",
 		"array": [
@@ -1157,6 +1300,9 @@ export const athkar = [
 	{
 		"id": 36,
 		"category": "دعاء لقاء العدو و ذي السلطان",
+		"icon": Shield,
+		"colorLow": "#FFC4C4",
+		"colorHigh": "#EE6983",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_037.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_037",
 		"array": [
@@ -1186,6 +1332,9 @@ export const athkar = [
 	{
 		"id": 37,
 		"category": "دعاء من خاف ظلم السلطان",
+		"icon": Shield,
+		"colorLow": "#87BAC3",
+		"colorHigh": "#D6F4ED",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_038.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_038",
 		"array": [
@@ -1208,6 +1357,9 @@ export const athkar = [
 	{
 		"id": 38,
 		"category": "الدعاء على العدو",
+		"icon": Sword,
+		"colorLow": "#658C58",
+		"colorHigh": "#31694E",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_039.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_039",
 		"array": [
@@ -1223,6 +1375,9 @@ export const athkar = [
 	{
 		"id": 39,
 		"category": "ما يقول من خاف قوما",
+		"icon": Shield,
+		"colorLow": "#8FABD4",
+		"colorHigh": "#4A70A9",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_040.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_040",
 		"array": [
@@ -1238,6 +1393,9 @@ export const athkar = [
 	{
 		"id": 40,
 		"category": "دعاء من أصابه وسوسة في الإيمان",
+		"icon": Brain,
+		"colorLow": "#FFA4A4",
+		"colorHigh": "#FFBDBD",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_041.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_041",
 		"array": [
@@ -1267,6 +1425,9 @@ export const athkar = [
 	{
 		"id": 41,
 		"category": "دعاء قضاء الدين",
+		"icon": DollarSign,
+		"colorLow": "#FFF0DD",
+		"colorHigh": "#D1D3D4",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_042.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_042",
 		"array": [
@@ -1289,6 +1450,9 @@ export const athkar = [
 	{
 		"id": 42,
 		"category": "دعاء الوسوسة في الصلاة و القراءة",
+		"icon": Brain,
+		"colorLow": "#FFECC0",
+		"colorHigh": "#FFC29B",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_043.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_043",
 		"array": [
@@ -1304,6 +1468,9 @@ export const athkar = [
 	{
 		"id": 43,
 		"category": "دعاء من استصعب عليه أمر",
+		"icon": HelpCircle,
+		"colorLow": "#FFC4C4",
+		"colorHigh": "#EE6983",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_044.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_044",
 		"array": [
@@ -1319,6 +1486,9 @@ export const athkar = [
 	{
 		"id": 44,
 		"category": "ما يقول ويفعل من أذنب ذنبا",
+		"icon": AlertCircle,
+		"colorLow": "#87BAC3",
+		"colorHigh": "#D6F4ED",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_045.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_045",
 		"array": [
@@ -1334,6 +1504,9 @@ export const athkar = [
 	{
 		"id": 45,
 		"category": "دعاء طرد الشيطان و وساوسه",
+		"icon": Shield,
+		"colorLow": "#658C58",
+		"colorHigh": "#31694E",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_046.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_046",
 		"array": [
@@ -1363,6 +1536,9 @@ export const athkar = [
 	{
 		"id": 46,
 		"category": "الدعاء حينما يقع ما لا يرضاه أو ُ غلب على أمره",
+		"icon": AlertTriangle,
+		"colorLow": "#8FABD4",
+		"colorHigh": "#4A70A9",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_047.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_047",
 		"array": [
@@ -1378,6 +1554,9 @@ export const athkar = [
 	{
 		"id": 47,
 		"category": "ﺗﻬنئة المولود له وجوابه",
+		"icon": BookOpen,
+		"colorLow": "#FFA4A4",
+		"colorHigh": "#FFBDBD",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_048.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_048",
 		"array": [
@@ -1393,6 +1572,9 @@ export const athkar = [
 	{
 		"id": 48,
 		"category": "ما يعوذ به الأولاد",
+		"icon": Heart,
+		"colorLow": "#FFF0DD",
+		"colorHigh": "#D1D3D4",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_049.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_049",
 		"array": [
@@ -1408,6 +1590,9 @@ export const athkar = [
 	{
 		"id": 49,
 		"category": "الدعاء للمريض في عيادته",
+		"icon": Heart,
+		"colorLow": "#FFECC0",
+		"colorHigh": "#FFC29B",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_050.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_050",
 		"array": [
@@ -1430,6 +1615,9 @@ export const athkar = [
 	{
 		"id": 50,
 		"category": "فضل عيادة المريض",
+		"icon": Heart,
+		"colorLow": "#FFC4C4",
+		"colorHigh": "#EE6983",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_051.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_051",
 		"array": [
@@ -1445,6 +1633,9 @@ export const athkar = [
 	{
 		"id": 51,
 		"category": "دعاء المريض الذي يئس من حياته",
+		"icon": Heart,
+		"colorLow": "#87BAC3",
+		"colorHigh": "#D6F4ED",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_052.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_052",
 		"array": [
@@ -1474,6 +1665,9 @@ export const athkar = [
 	{
 		"id": 52,
 		"category": "تلقين المحتضر",
+		"icon": Heart,
+		"colorLow": "#658C58",
+		"colorHigh": "#31694E",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_053.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_053",
 		"array": [
@@ -1489,6 +1683,9 @@ export const athkar = [
 	{
 		"id": 53,
 		"category": "دعاء من أصيب بمصيبة",
+		"icon": Heart,
+		"colorLow": "#8FABD4",
+		"colorHigh": "#4A70A9",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_054.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_054",
 		"array": [
@@ -1504,6 +1701,9 @@ export const athkar = [
 	{
 		"id": 54,
 		"category": "الدعاء عند إغماض الميت",
+		"icon": Heart,
+		"colorLow": "#FFA4A4",
+		"colorHigh": "#FFBDBD",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_055.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_055",
 		"array": [
@@ -1519,6 +1719,9 @@ export const athkar = [
 	{
 		"id": 55,
 		"category": "الدعاء للميت في الصلاة عليه",
+		"icon": Heart,
+		"colorLow": "#FFF0DD",
+		"colorHigh": "#D1D3D4",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_056.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_056",
 		"array": [
@@ -1555,6 +1758,9 @@ export const athkar = [
 	{
 		"id": 56,
 		"category": "الدعاء للفرط في الصلاة عليه",
+		"icon": Heart,
+		"colorLow": "#FFECC0",
+		"colorHigh": "#FFC29B",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_057.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_057",
 		"array": [
@@ -1577,6 +1783,9 @@ export const athkar = [
 	{
 		"id": 57,
 		"category": "دعاء التعزية",
+		"icon": Heart,
+		"colorLow": "#FFC4C4",
+		"colorHigh": "#EE6983",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_058.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_058",
 		"array": [
@@ -1592,6 +1801,9 @@ export const athkar = [
 	{
 		"id": 58,
 		"category": "الدعاء عند إدخال الميت القبر",
+		"icon": Heart,
+		"colorLow": "#87BAC3",
+		"colorHigh": "#D6F4ED",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_059.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_059",
 		"array": [
@@ -1607,6 +1819,9 @@ export const athkar = [
 	{
 		"id": 59,
 		"category": "الدعاء بعد دفن الميت",
+		"icon": Heart,
+		"colorLow": "#658C58",
+		"colorHigh": "#31694E",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_060.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_060",
 		"array": [
@@ -1622,6 +1837,9 @@ export const athkar = [
 	{
 		"id": 60,
 		"category": "دعاء زيارة القبور",
+		"icon": Heart,
+		"colorLow": "#8FABD4",
+		"colorHigh": "#4A70A9",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_061.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_061",
 		"array": [
@@ -1637,6 +1855,9 @@ export const athkar = [
 	{
 		"id": 61,
 		"category": "دعاء الريح",
+		"icon": Wind,
+		"colorLow": "#FFA4A4",
+		"colorHigh": "#FFBDBD",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_062.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_062",
 		"array": [
@@ -1659,6 +1880,9 @@ export const athkar = [
 	{
 		"id": 62,
 		"category": "دعاء الرعد",
+		"icon": Zap,
+		"colorLow": "#FFF0DD",
+		"colorHigh": "#D1D3D4",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_063.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_063",
 		"array": [
@@ -1674,6 +1898,9 @@ export const athkar = [
 	{
 		"id": 63,
 		"category": "من أدعية الاستسقاء",
+		"icon": CloudRain,
+		"colorLow": "#FFECC0",
+		"colorHigh": "#FFC29B",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_064.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_064",
 		"array": [
@@ -1703,6 +1930,9 @@ export const athkar = [
 	{
 		"id": 64,
 		"category": "الدعاء إذا نزل المطر",
+		"icon": CloudRain,
+		"colorLow": "#FFC4C4",
+		"colorHigh": "#EE6983",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_065.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_065",
 		"array": [
@@ -1718,6 +1948,9 @@ export const athkar = [
 	{
 		"id": 65,
 		"category": "الذكر بعد نزول المطر",
+		"icon": CloudRain,
+		"colorLow": "#87BAC3",
+		"colorHigh": "#D6F4ED",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_066.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_066",
 		"array": [
@@ -1733,6 +1966,9 @@ export const athkar = [
 	{
 		"id": 66,
 		"category": "من أدعية الاستصحاء",
+		"icon": Sun,
+		"colorLow": "#658C58",
+		"colorHigh": "#31694E",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_067.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_067",
 		"array": [
@@ -1748,6 +1984,9 @@ export const athkar = [
 	{
 		"id": 67,
 		"category": "دعاء رؤية الهلال",
+		"icon": Moon,
+		"colorLow": "#8FABD4",
+		"colorHigh": "#4A70A9",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_068.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_068",
 		"array": [
@@ -1763,6 +2002,9 @@ export const athkar = [
 	{
 		"id": 68,
 		"category": "الدعاء عند إفطار الصائم",
+		"icon": Sunset,
+		"colorLow": "#FFA4A4",
+		"colorHigh": "#FFBDBD",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_069.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_069",
 		"array": [
@@ -1785,6 +2027,9 @@ export const athkar = [
 	{
 		"id": 69,
 		"category": "الدعاء قبل الطعام",
+		"icon": Utensils,
+		"colorLow": "#FFF0DD",
+		"colorHigh": "#D1D3D4",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_070.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_070",
 		"array": [
@@ -1807,6 +2052,9 @@ export const athkar = [
 	{
 		"id": 70,
 		"category": "الدعاء عند الفراغ من الطعام",
+		"icon": Utensils,
+		"colorLow": "#FFECC0",
+		"colorHigh": "#FFC29B",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_071.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_071",
 		"array": [
@@ -1829,6 +2077,9 @@ export const athkar = [
 	{
 		"id": 71,
 		"category": "دعاء الضيف لصاحب الطعام",
+		"icon": Utensils,
+		"colorLow": "#FFC4C4",
+		"colorHigh": "#EE6983",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_072.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_072",
 		"array": [
@@ -1844,6 +2095,9 @@ export const athkar = [
 	{
 		"id": 72,
 		"category": "التعريض بالدعاء لطلب الطعام أو الشراب",
+		"icon": Utensils,
+		"colorLow": "#87BAC3",
+		"colorHigh": "#D6F4ED",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_073.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_073",
 		"array": [
@@ -1859,6 +2113,9 @@ export const athkar = [
 	{
 		"id": 73,
 		"category": "الدعاء إذا أفطر عند أهل بيت",
+		"icon": Utensils,
+		"colorLow": "#658C58",
+		"colorHigh": "#31694E",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_074.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_074",
 		"array": [
@@ -1874,6 +2131,9 @@ export const athkar = [
 	{
 		"id": 74,
 		"category": "دعاء الصائم إذا حضر الطعام ولم يفطر",
+		"icon": Utensils,
+		"colorLow": "#8FABD4",
+		"colorHigh": "#4A70A9",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_075.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_075",
 		"array": [
@@ -1889,6 +2149,9 @@ export const athkar = [
 	{
 		"id": 75,
 		"category": "ما يقول الصائم إذا سابه أحد",
+		"icon": Sunset,
+		"colorLow": "#FFA4A4",
+		"colorHigh": "#FFBDBD",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_076.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_076",
 		"array": [
@@ -1904,6 +2167,9 @@ export const athkar = [
 	{
 		"id": 76,
 		"category": "الدعاء عند رؤية باكورة الثمر",
+		"icon": Apple,
+		"colorLow": "#FFF0DD",
+		"colorHigh": "#D1D3D4",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_077.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_077",
 		"array": [
@@ -1919,6 +2185,9 @@ export const athkar = [
 	{
 		"id": 77,
 		"category": "دعاء العطاس",
+		"icon": Smile,
+		"colorLow": "#FFECC0",
+		"colorHigh": "#FFC29B",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_078.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_078",
 		"array": [
@@ -1934,6 +2203,9 @@ export const athkar = [
 	{
 		"id": 78,
 		"category": "ما يقال للكافر إذا عطس فحمد الله",
+		"icon": Smile,
+		"colorLow": "#FFC4C4",
+		"colorHigh": "#EE6983",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_079.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_079",
 		"array": [
@@ -1949,6 +2221,9 @@ export const athkar = [
 	{
 		"id": 79,
 		"category": "الدعاء للمتزوج",
+		"icon": Heart,
+		"colorLow": "#87BAC3",
+		"colorHigh": "#D6F4ED",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_080.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_080",
 		"array": [
@@ -1964,6 +2239,9 @@ export const athkar = [
 	{
 		"id": 80,
 		"category": "دعاء المتزوج و شراء الدابة",
+		"icon": Heart,
+		"colorLow": "#658C58",
+		"colorHigh": "#31694E",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_081.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_081",
 		"array": [
@@ -1979,6 +2257,9 @@ export const athkar = [
 	{
 		"id": 81,
 		"category": "الدعاء قبل إتيان الزوجة",
+		"icon": Heart,
+		"colorLow": "#8FABD4",
+		"colorHigh": "#4A70A9",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_082.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_082",
 		"array": [
@@ -1994,6 +2275,9 @@ export const athkar = [
 	{
 		"id": 82,
 		"category": "دعاء الغضب",
+		"icon": AlertTriangle,
+		"colorLow": "#FFA4A4",
+		"colorHigh": "#FFBDBD",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_083.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_083",
 		"array": [
@@ -2009,6 +2293,9 @@ export const athkar = [
 	{
 		"id": 83,
 		"category": "دعاء من رأى مبتلى",
+		"icon": Eye,
+		"colorLow": "#FFF0DD",
+		"colorHigh": "#D1D3D4",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_084.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_084",
 		"array": [
@@ -2024,6 +2311,9 @@ export const athkar = [
 	{
 		"id": 84,
 		"category": "ما يقال في اﻟﻤﺠلس",
+		"icon": BookOpen,
+		"colorLow": "#FFECC0",
+		"colorHigh": "#FFC29B",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_085.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_085",
 		"array": [
@@ -2039,6 +2329,9 @@ export const athkar = [
 	{
 		"id": 85,
 		"category": "كفارة اﻟﻤﺠلس",
+		"icon": BookOpen,
+		"colorLow": "#FFC4C4",
+		"colorHigh": "#EE6983",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_086.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_086",
 		"array": [
@@ -2054,6 +2347,9 @@ export const athkar = [
 	{
 		"id": 86,
 		"category": "الدعاء لمن قال غفر الله لك",
+		"icon": Heart,
+		"colorLow": "#87BAC3",
+		"colorHigh": "#D6F4ED",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_087.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_087",
 		"array": [
@@ -2069,6 +2365,9 @@ export const athkar = [
 	{
 		"id": 87,
 		"category": "الدعاء لمن صنع إليك معروفا",
+		"icon": Heart,
+		"colorLow": "#658C58",
+		"colorHigh": "#31694E",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_088.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_088",
 		"array": [
@@ -2084,6 +2383,9 @@ export const athkar = [
 	{
 		"id": 88,
 		"category": "ما يعصم الله به من الدجال",
+		"icon": Shield,
+		"colorLow": "#8FABD4",
+		"colorHigh": "#4A70A9",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_089.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_089",
 		"array": [
@@ -2099,6 +2401,9 @@ export const athkar = [
 	{
 		"id": 89,
 		"category": "الدعاء لمن قال إني أحبك في الله",
+		"icon": Heart,
+		"colorLow": "#FFA4A4",
+		"colorHigh": "#FFBDBD",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_090.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_090",
 		"array": [
@@ -2114,6 +2419,9 @@ export const athkar = [
 	{
 		"id": 90,
 		"category": "الدعاء لمن عرض عليك ماله",
+		"icon": DollarSign,
+		"colorLow": "#FFF0DD",
+		"colorHigh": "#D1D3D4",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_091.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_091",
 		"array": [
@@ -2129,6 +2437,9 @@ export const athkar = [
 	{
 		"id": 91,
 		"category": "الدعاء لمن أقرض عند القضاء",
+		"icon": DollarSign,
+		"colorLow": "#FFECC0",
+		"colorHigh": "#FFC29B",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_091.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_091",
 		"array": [
@@ -2144,6 +2455,9 @@ export const athkar = [
 	{
 		"id": 92,
 		"category": "دعاء الخوف من الشرك",
+		"icon": Shield,
+		"colorLow": "#FFC4C4",
+		"colorHigh": "#EE6983",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_092.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_092",
 		"array": [
@@ -2159,6 +2473,9 @@ export const athkar = [
 	{
 		"id": 93,
 		"category": "الدعاء لمن قال بارك الله فيك",
+		"icon": Heart,
+		"colorLow": "#87BAC3",
+		"colorHigh": "#D6F4ED",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_094.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_094",
 		"array": [
@@ -2174,6 +2491,9 @@ export const athkar = [
 	{
 		"id": 94,
 		"category": "دعاء كراهية الطيرة",
+		"icon": Bird,
+		"colorLow": "#658C58",
+		"colorHigh": "#31694E",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_095.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_095",
 		"array": [
@@ -2189,6 +2509,9 @@ export const athkar = [
 	{
 		"id": 95,
 		"category": "دعاء الركوب",
+		"icon": Car,
+		"colorLow": "#8FABD4",
+		"colorHigh": "#4A70A9",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_096.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_096",
 		"array": [
@@ -2204,6 +2527,9 @@ export const athkar = [
 	{
 		"id": 96,
 		"category": "دعاء السفر",
+		"icon": Plane,
+		"colorLow": "#FFA4A4",
+		"colorHigh": "#FFBDBD",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_097.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_097",
 		"array": [
@@ -2219,6 +2545,9 @@ export const athkar = [
 	{
 		"id": 97,
 		"category": "دعاء دخول القرية أو البلدة",
+		"icon": MapPin,
+		"colorLow": "#FFF0DD",
+		"colorHigh": "#D1D3D4",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_098.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_098",
 		"array": [
@@ -2234,6 +2563,9 @@ export const athkar = [
 	{
 		"id": 98,
 		"category": "دعاء دخول السوق",
+		"icon": ShoppingCart,
+		"colorLow": "#FFECC0",
+		"colorHigh": "#FFC29B",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_099.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_099",
 		"array": [
@@ -2249,6 +2581,9 @@ export const athkar = [
 	{
 		"id": 99,
 		"category": "الدعاء إذا تعس المركوب",
+		"icon": Car,
+		"colorLow": "#FFC4C4",
+		"colorHigh": "#EE6983",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_100.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_100",
 		"array": [
@@ -2264,6 +2599,9 @@ export const athkar = [
 	{
 		"id": 100,
 		"category": "دعاء المسافر للمقيم",
+		"icon": Plane,
+		"colorLow": "#87BAC3",
+		"colorHigh": "#D6F4ED",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_101.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_101",
 		"array": [
@@ -2279,6 +2617,9 @@ export const athkar = [
 	{
 		"id": 101,
 		"category": "دعاء المقيم للمسافر",
+		"icon": Plane,
+		"colorLow": "#658C58",
+		"colorHigh": "#31694E",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_102.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_102",
 		"array": [
@@ -2301,6 +2642,9 @@ export const athkar = [
 	{
 		"id": 102,
 		"category": "التكبير و التسبيح في سير السفر",
+		"icon": Plane,
+		"colorLow": "#8FABD4",
+		"colorHigh": "#4A70A9",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_103.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_103",
 		"array": [
@@ -2316,6 +2660,9 @@ export const athkar = [
 	{
 		"id": 103,
 		"category": "دعاء المسافر إذا أسحر",
+		"icon": Sun,
+		"colorLow": "#FFA4A4",
+		"colorHigh": "#FFBDBD",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_104.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_104",
 		"array": [
@@ -2331,6 +2678,9 @@ export const athkar = [
 	{
 		"id": 104,
 		"category": "الدعاء إذا نزل مترلا في سفر أو غيره",
+		"icon": MapPin,
+		"colorLow": "#FFF0DD",
+		"colorHigh": "#D1D3D4",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_105.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_105",
 		"array": [
@@ -2346,6 +2696,9 @@ export const athkar = [
 	{
 		"id": 105,
 		"category": "ذكر الرجوع من السفر",
+		"icon": Home,
+		"colorLow": "#FFECC0",
+		"colorHigh": "#FFC29B",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_106.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_106",
 		"array": [
@@ -2361,6 +2714,9 @@ export const athkar = [
 	{
 		"id": 106,
 		"category": "ما يقول من أتاه أمر يسره أو يكرهه",
+		"icon": AlertCircle,
+		"colorLow": "#FFC4C4",
+		"colorHigh": "#EE6983",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_107.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_107",
 		"array": [
@@ -2376,6 +2732,9 @@ export const athkar = [
 	{
 		"id": 107,
 		"category": "فضل الصلاة على النبي صلى الله عليه و سلم",
+		"icon": Heart,
+		"colorLow": "#87BAC3",
+		"colorHigh": "#D6F4ED",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_108.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_108",
 		"array": [
@@ -2419,6 +2778,9 @@ export const athkar = [
 	{
 		"id": 108,
 		"category": "إفشاء السلام",
+		"icon": Hand,
+		"colorLow": "#658C58",
+		"colorHigh": "#31694E",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_109.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_109",
 		"array": [
@@ -2448,6 +2810,9 @@ export const athkar = [
 	{
 		"id": 109,
 		"category": "كيف يرد السلام على الكافر إذا سلم",
+		"icon": Hand,
+		"colorLow": "#8FABD4",
+		"colorHigh": "#4A70A9",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_110.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_110",
 		"array": [
@@ -2463,6 +2828,9 @@ export const athkar = [
 	{
 		"id": 110,
 		"category": "الدُّعاءُ عِنْدَ سَمَاعِ صِياحِ الدِّيكِ ونَهِيقِ الْحِمَارِ",
+		"icon": Volume2,
+		"colorLow": "#FFA4A4",
+		"colorHigh": "#FFBDBD",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_111.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_111",
 		"array": [
@@ -2478,6 +2846,9 @@ export const athkar = [
 	{
 		"id": 111,
 		"category": "دعاء نباح الكلاب بالليل",
+		"icon": Volume2,
+		"colorLow": "#FFF0DD",
+		"colorHigh": "#D1D3D4",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_112.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_112",
 		"array": [
@@ -2493,6 +2864,9 @@ export const athkar = [
 	{
 		"id": 112,
 		"category": "الدعاء لمن سببته",
+		"icon": Heart,
+		"colorLow": "#FFECC0",
+		"colorHigh": "#FFC29B",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_113.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_113",
 		"array": [
@@ -2508,6 +2882,9 @@ export const athkar = [
 	{
 		"id": 113,
 		"category": "ما يقول المسلم إذا مدح المسلم",
+		"icon": Heart,
+		"colorLow": "#FFC4C4",
+		"colorHigh": "#EE6983",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_114.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_114",
 		"array": [
@@ -2523,6 +2900,9 @@ export const athkar = [
 	{
 		"id": 114,
 		"category": "ما يقول المسلم إذا زكي",
+		"icon": Heart,
+		"colorLow": "#87BAC3",
+		"colorHigh": "#D6F4ED",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_115.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_115",
 		"array": [
@@ -2538,6 +2918,9 @@ export const athkar = [
 	{
 		"id": 115,
 		"category": "كيف يلبي المحرم في الحج أو العمرة ؟",
+		"icon": Navigation,
+		"colorLow": "#658C58",
+		"colorHigh": "#31694E",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_116.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_116",
 		"array": [
@@ -2553,6 +2936,9 @@ export const athkar = [
 	{
 		"id": 116,
 		"category": "التكبير إذا أتى الركن الأسود",
+		"icon": Navigation,
+		"colorLow": "#8FABD4",
+		"colorHigh": "#4A70A9",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_117.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_117",
 		"array": [
@@ -2568,6 +2954,9 @@ export const athkar = [
 	{
 		"id": 117,
 		"category": "الدعاء بين الركن اليماني والحجر الأسود",
+		"icon": Navigation,
+		"colorLow": "#FFA4A4",
+		"colorHigh": "#FFBDBD",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_118.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_118",
 		"array": [
@@ -2583,6 +2972,9 @@ export const athkar = [
 	{
 		"id": 118,
 		"category": "دعاء الوقوف على الصفا والمروة",
+		"icon": Navigation,
+		"colorLow": "#FFF0DD",
+		"colorHigh": "#D1D3D4",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_119.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_119",
 		"array": [
@@ -2598,6 +2990,9 @@ export const athkar = [
 	{
 		"id": 119,
 		"category": "الدعاء يوم عرفة",
+		"icon": Sun,
+		"colorLow": "#FFECC0",
+		"colorHigh": "#FFC29B",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_120.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_120",
 		"array": [
@@ -2613,6 +3008,9 @@ export const athkar = [
 	{
 		"id": 120,
 		"category": "الذكر عند المشعر الحرام",
+		"icon": Navigation,
+		"colorLow": "#FFC4C4",
+		"colorHigh": "#EE6983",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_121.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_121",
 		"array": [
@@ -2628,6 +3026,9 @@ export const athkar = [
 	{
 		"id": 121,
 		"category": "التكبير عند رمي الجمار مع كل حصاة",
+		"icon": Navigation,
+		"colorLow": "#87BAC3",
+		"colorHigh": "#D6F4ED",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_122.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_122",
 		"array": [
@@ -2643,6 +3044,9 @@ export const athkar = [
 	{
 		"id": 122,
 		"category": "دعاء التعجب والأمر السار",
+		"icon": Smile,
+		"colorLow": "#658C58",
+		"colorHigh": "#31694E",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_123.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_123",
 		"array": [
@@ -2665,6 +3069,9 @@ export const athkar = [
 	{
 		"id": 123,
 		"category": "ما يفعل من أتاه أمر يسره",
+		"icon": Smile,
+		"colorLow": "#8FABD4",
+		"colorHigh": "#4A70A9",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_124.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_124",
 		"array": [
@@ -2680,6 +3087,9 @@ export const athkar = [
 	{
 		"id": 124,
 		"category": "ما يقول من أحس وجعا في جسده",
+		"icon": Heart,
+		"colorLow": "#FFA4A4",
+		"colorHigh": "#FFBDBD",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_125.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_125",
 		"array": [
@@ -2695,6 +3105,9 @@ export const athkar = [
 	{
 		"id": 125,
 		"category": "دعاء من خشي أن يصيب شيئا بعينه",
+		"icon": Eye,
+		"colorLow": "#FFF0DD",
+		"colorHigh": "#D1D3D4",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_126.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_126",
 		"array": [
@@ -2710,6 +3123,9 @@ export const athkar = [
 	{
 		"id": 126,
 		"category": "ما يقال عند الفزع",
+		"icon": AlertTriangle,
+		"colorLow": "#FFECC0",
+		"colorHigh": "#FFC29B",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_127.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_127",
 		"array": [
@@ -2725,6 +3141,9 @@ export const athkar = [
 	{
 		"id": 127,
 		"category": "ما يقول عند الذبح أو النحر",
+		"icon": Drumstick,
+		"colorLow": "#FFC4C4",
+		"colorHigh": "#EE6983",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_128.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_128",
 		"array": [
@@ -2740,6 +3159,9 @@ export const athkar = [
 	{
 		"id": 128,
 		"category": "ما يقول لرد كيد مردة الشياطين",
+		"icon": Shield,
+		"colorLow": "#87BAC3",
+		"colorHigh": "#D6F4ED",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_129.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_129",
 		"array": [
@@ -2755,6 +3177,9 @@ export const athkar = [
 	{
 		"id": 129,
 		"category": "الاستغفار و التوبة",
+		"icon": Heart,
+		"colorLow": "#658C58",
+		"colorHigh": "#31694E",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_130.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_130",
 		"array": [
@@ -2805,6 +3230,9 @@ export const athkar = [
 	{
 		"id": 130,
 		"category": "التسبيح",
+		"icon": Star,
+		"colorLow": "#8FABD4",
+		"colorHigh": "#4A70A9",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_131.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_131",
 		"array": [
@@ -2897,6 +3325,9 @@ export const athkar = [
 	{
 		"id": 131,
 		"category": "كيف كان النبي يسبح؟",
+		"icon": Star,
+		"colorLow": "#FFA4A4",
+		"colorHigh": "#FFBDBD",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_132.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_132",
 		"array": [
@@ -2912,6 +3343,9 @@ export const athkar = [
 	{
 		"id": 132,
 		"category": "من أنواع الخير والآداب الجامعة",
+		"icon": Heart,
+		"colorLow": "#FFF0DD",
+		"colorHigh": "#D1D3D4",
 		"audio": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_133.mp3",
 		"filename": "ar_7esn_AlMoslem_by_Doors_133",
 		"array": [

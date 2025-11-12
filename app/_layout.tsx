@@ -23,6 +23,7 @@ const StackLayout = () => {
       <Stack.Screen name="index" options={{ headerShown: false }} />
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       <Stack.Screen name="all-prayers" options={{ headerShown: false }} />
+      <Stack.Screen name="athkar-details" options={{ headerShown: false }} />
       <Stack.Screen
         name="modal"
         options={{ presentation: "modal", title: "Modal" }}

@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "athkar",
-    "slug": "athkar",
+    "name": "sabili",
+    "slug": "sabili",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "athkar",
+    "scheme": "sabili",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
