@@ -31,6 +31,7 @@
     "dex-contracts-v2": "git+https://git@github.com/aeternity/dex-contracts-v2#69f800fece02da1444af7f0d6622fec356a15496",
     "expo": "~54.0.13",
     "expo-av": "^16.0.7",
+    "expo-clipboard": "~8.0.7",
     "expo-constants": "~18.0.9",
     "expo-crypto": "^15.0.7",
     "expo-font": "~14.0.9",

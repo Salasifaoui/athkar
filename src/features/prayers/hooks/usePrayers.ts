@@ -83,9 +83,6 @@ export function usePrayers(selectedCity: City | null, date?: Date) {
         // Handle prayer times
         if (fetchedTimings) {
           const formattedPrayers = formatPrayerTimings(fetchedTimings);
-          console.log('====================================');
-          console.log('formattedPrayers', formattedPrayers);
-          console.log('====================================');
           setPrayers(formattedPrayers);
           setTimings(fetchedTimings);
         } else {

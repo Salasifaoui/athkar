@@ -11,22 +11,29 @@ import { useAthkar } from "../../hooks/useAthkar";
 export default function FavoriteCadre({name}: {name: string}) {
   const router = useRouter();
   const { categoryData } = useAthkar(name);
-  const { icon, category, colorLow, colorHigh, array } = categoryData || {};
+  const { icon, category, color, array } = categoryData || {};
+  const colorClasses = {
+    blue: "bg-blue-500",
+    red: "bg-red-500",
+    yellow: "bg-yellow-500",
+    green: "bg-green-500",
+  } as const;
+  const colorClass = color && color in colorClasses ? colorClasses[color as keyof typeof colorClasses] : colorClasses.blue;
   return (
-    <Pressable className="rounded-2xl p-6 h-40" style={{ backgroundColor: colorHigh }} onPress={() => router.push(`/athkar-details?name=${name}`)}>
+    <Pressable className={`rounded-2xl p-6 h-40 ${colorClass}`}  onPress={() => router.push(`/athkar-details?name=${name}`)}>
       <HStack className="justify-between items-center">
         <Icon as={ChevronLeft} size={24} className="text-white" />
         <VStack className="gap-3 items-end justify-end">
-          <Box className="rounded-lg p-3" style={{ backgroundColor: colorLow }}>
+          <Box className={`rounded-full p-3 bg-white`}>
             <Icon
               as={icon as unknown as LucideIcon}
               size={24}
-              stroke={colorHigh}
+              stroke={color}
             />
           </Box>
 
           <Text className="text-white text-lg font-bold">{category}</Text>
-          <Text className="text-white text-sm font-normal">{array?.length} أذكار</Text>
+          <Text className="text-white text-md font-normal">{array?.length} أذكار</Text>
         </VStack>
       </HStack>
     </Pressable>
