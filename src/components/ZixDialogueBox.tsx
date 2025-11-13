@@ -1,18 +1,18 @@
 import {
-    AlertDialog,
-    AlertDialogBackdrop,
-    AlertDialogBody,
-    AlertDialogContent,
-    AlertDialogFooter,
-    AlertDialogHeader,
+  AlertDialog,
+  AlertDialogBackdrop,
+  AlertDialogBody,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
 } from "@/components/ui/alert-dialog";
 
 interface ZixDialogueBoxProps {
   isOpen: boolean;
   onClose: () => void;
-  header: React.ReactNode;
+  header?: React.ReactNode;
   children: React.ReactNode;
-  footer: React.ReactNode;
+  footer?: React.ReactNode;
 }
 
 export default function ZixDialogueBox({
@@ -26,9 +26,9 @@ export default function ZixDialogueBox({
     <AlertDialog isOpen={isOpen} onClose={onClose} size="lg" className="rounded-none border-none">
       <AlertDialogBackdrop />
       <AlertDialogContent className="p-0">
-        <AlertDialogHeader className="bg-primary-500 w-full">{header}</AlertDialogHeader>
+        {header && <AlertDialogHeader className="bg-primary-500 w-full">{header}</AlertDialogHeader>}
         <AlertDialogBody>{children}</AlertDialogBody>
-        <AlertDialogFooter className="p-5">{footer}</AlertDialogFooter>
+        {footer && <AlertDialogFooter className="p-5">{footer}</AlertDialogFooter>}
       </AlertDialogContent>
     </AlertDialog>
   );

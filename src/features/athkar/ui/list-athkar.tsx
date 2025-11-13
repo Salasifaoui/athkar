@@ -9,9 +9,9 @@ import { RefreshCw, Volume2 } from "lucide-react-native";
 import { useState } from "react";
 import { ScrollView, View } from "react-native";
 import Svg, { Circle, G } from "react-native-svg";
-import { getAudioSource } from "../../../services/audioServices";
+import { getAudioSource } from "../../audio/services/audioServices";
+import LecteurAudio from "../../audio/ui/lecteur-audio";
 import { useAthkar } from "../hooks/useAthkar";
-import LecteurAudio from "./component/lecteur-audio";
 
 // Circular Progress Component
 function CircularProgress({ progress, size = 50, strokeWidth = 5 }: { progress: number; size?: number; strokeWidth?: number }) {

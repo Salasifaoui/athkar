@@ -25,7 +25,7 @@ const fakeData = {
   },
 };
 
-export default function Header({ currentDate }: { currentDate: Date }) {
+export default function Header({ currentDate, setIsAboutMeOpen }: { currentDate: Date, setIsAboutMeOpen: (isOpen: boolean) => void }) {
   const router = useRouter();
   const [data] = useState(fakeData);
   const { selectedCity } = useSelectedCity();
@@ -77,7 +77,7 @@ export default function Header({ currentDate }: { currentDate: Date }) {
               iconAs={Info}
               sizeIcon={20}
               colorIconAs="text-white"
-              onPress={() => {}}
+              onPress={() => {setIsAboutMeOpen(true)}}
             />
           </HStack>
 

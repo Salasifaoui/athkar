@@ -4,9 +4,11 @@ import { Icon } from "@/components/ui/icon";
 import { ScreenLayout } from "@/components/ui/screen-layout/screen-layout";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
+import ZixDialogueBox from "@/src/components/ZixDialogueBox";
 import { Star } from "lucide-react-native";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { ScrollView } from "react-native";
+import AboutMe from "../aboutMe/ui/aboutMe";
 import Ahadith from "../ahadith/ui/ahadith";
 import Athkar from "../athkar/ui/athkar";
 import Names from "../names/ui/names";
@@ -14,6 +16,7 @@ import Prayers from "../prayers/ui/prayers";
 import Header from "./components/header";
 
 export default function HomeScreen() {
+  const [isAboutMeOpen, setIsAboutMeOpen] = useState(false);
   const colors = {
     primary: "#4A90E2",
     secondary: "#F5A623",
@@ -30,7 +33,7 @@ export default function HomeScreen() {
   const currentDate = today;
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      <Header currentDate={currentDate} />
+      <Header currentDate={currentDate} setIsAboutMeOpen={setIsAboutMeOpen} />
       <ScreenLayout>
         <VStack className="gap-4 pt-4 mb-20">
           <Prayers />
@@ -66,6 +69,12 @@ export default function HomeScreen() {
           </VStack>
         </VStack>
       </ScreenLayout>
+      <ZixDialogueBox
+        isOpen={isAboutMeOpen}
+        onClose={() => setIsAboutMeOpen(false)}
+      >
+        <AboutMe onClose={() => setIsAboutMeOpen(false)} />
+      </ZixDialogueBox>
     </ScrollView>
   );
 }

@@ -11,9 +11,9 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import { ArrowLeft, Copy, LucideIcon, Share2, Volume2 } from "lucide-react-native";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Alert, Share } from "react-native";
-import { getAudioSource } from "../../../services/audioServices";
+import { getAudioSource } from "../../audio/services/audioServices";
+import LecteurAudio from "../../audio/ui/lecteur-audio";
 import { useAthkar } from "../hooks/useAthkar";
-import LecteurAudio from "./component/lecteur-audio";
 
 export default function AthkarDetails() {
     const { name } = useLocalSearchParams<{ name: string }>();
