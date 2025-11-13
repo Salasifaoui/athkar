@@ -8,6 +8,7 @@ import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
 import ButtonAction from "@/src/components/ButtonAction";
 import { renderNameMonth, renderNameMonthHijri } from "@/src/utils/utils";
+import { useRouter } from "expo-router";
 import { Book, Info, Radar } from "lucide-react-native";
 import { useEffect, useState } from "react";
 import { usePrayers, useSelectedCity } from "../../prayers/hooks";
@@ -25,6 +26,7 @@ const fakeData = {
 };
 
 export default function Header({ currentDate }: { currentDate: Date }) {
+  const router = useRouter();
   const [data] = useState(fakeData);
   const { selectedCity } = useSelectedCity();
   const [currentDay, setCurrentDay] = useState<{ date: string, date_hijri: string, nameArabic: string } | null>(null);
@@ -67,7 +69,7 @@ export default function Header({ currentDate }: { currentDate: Date }) {
               iconAs={Radar}
               sizeIcon={20}
               colorIconAs="text-white"
-              onPress={() => {}}
+              onPress={() => {router.push("/al-kibla")}}
             />
             <ButtonAction
               variant="outline"
