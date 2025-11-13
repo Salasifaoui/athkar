@@ -11,14 +11,23 @@ import { View } from "react-native";
 
 interface LecteurAudioProps {
   audioSource?: { uri?: string; require?: number };
+  count?: number; // Number of times to repeat the audio
+  autoPlay?: boolean; // Auto-play when audio loads
+  onComplete?: () => void; // Callback when all repetitions are complete
 }
 
-export default function LecteurAudio({ audioSource }: LecteurAudioProps) {
+export default function LecteurAudio({ 
+  audioSource, 
+  count = 1, 
+  autoPlay = true,
+  onComplete 
+}: LecteurAudioProps) {
   const [sound, setSound] = useState<Audio.Sound | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [position, setPosition] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [currentRepeat, setCurrentRepeat] = useState(0);
   const progressBarWidth = useRef(0);
 
   // Load audio when source changes
@@ -53,7 +62,7 @@ export default function LecteurAudio({ audioSource }: LecteurAudioProps) {
         // Load new sound
         const { sound: newSound } = await Audio.Sound.createAsync(
           source,
-          { shouldPlay: false }
+          { shouldPlay: false } // We'll handle playing manually
         );
 
         currentSound = newSound;
@@ -64,6 +73,9 @@ export default function LecteurAudio({ audioSource }: LecteurAudioProps) {
           setDuration(status.durationMillis || 0);
         }
 
+        // Reset repeat counter when new audio loads
+        setCurrentRepeat(0);
+
         // Set up status update listener
         newSound.setOnPlaybackStatusUpdate((status) => {
           if (status.isLoaded) {
@@ -72,12 +84,53 @@ export default function LecteurAudio({ audioSource }: LecteurAudioProps) {
             
             if (status.didJustFinish) {
               setIsPlaying(false);
-              setPosition(0);
+              
+              // Handle repetition logic
+              setCurrentRepeat((prev) => {
+                const newRepeat = prev + 1;
+                
+                // If we haven't reached the required count, play again
+                if (newRepeat < count) {
+                  // Reset position and play again after a short delay
+                  setTimeout(async () => {
+                    if (newSound) {
+                      try {
+                        await newSound.setPositionAsync(0);
+                        await newSound.playAsync();
+                      } catch (error) {
+                        console.error("Error replaying audio:", error);
+                      }
+                    }
+                  }, 100);
+                  return newRepeat;
+                } else {
+                  // All repetitions complete, reset position and call onComplete callback
+                  if (newSound) {
+                    newSound.setPositionAsync(0).catch(console.error);
+                  }
+                  setPosition(0);
+                  if (onComplete) {
+                    setTimeout(() => {
+                      onComplete();
+                    }, 100);
+                  }
+                  return newRepeat;
+                }
+              });
             }
           }
         });
 
         setSound(newSound);
+        
+        // Auto-play if enabled
+        if (autoPlay && newSound) {
+          try {
+            await newSound.playAsync();
+          } catch (error) {
+            console.error("Error auto-playing audio:", error);
+          }
+        }
       } catch (error) {
         console.error("Error loading audio:", error);
       } finally {
@@ -93,7 +146,7 @@ export default function LecteurAudio({ audioSource }: LecteurAudioProps) {
         currentSound.unloadAsync();
       }
     };
-  }, [audioSource]);
+  }, [audioSource, autoPlay, count, onComplete]);
 
   // Cleanup on unmount
   useEffect(() => {
@@ -200,6 +253,15 @@ export default function LecteurAudio({ audioSource }: LecteurAudioProps) {
             -{formatTime(timeRemaining)}
           </Text>
         </HStack>
+        
+        {/* Repeat Counter */}
+        {count > 1 && (
+          <HStack className="justify-center items-center">
+            <Text className="text-sm text-typography-500">
+              {currentRepeat + 1} / {count}
+            </Text>
+          </HStack>
+        )}
 
         {/* Controls */}
         <HStack className="justify-center items-center" space="lg">

@@ -202,6 +202,13 @@ export default function AthkarDetails() {
         setCount(0);
     }, [currentIndex]);
 
+    // Handle audio completion - move to next athkar
+    const handleAudioComplete = useCallback(() => {
+        if (currentIndex < totalItems - 1) {
+            handleNext();
+        }
+    }, [currentIndex, totalItems, handleNext]);
+
     const handleCountIncrement = () => {
         if (currentAthkar) {
             const requiredCount = currentAthkar.count || 1;
@@ -335,7 +342,12 @@ export default function AthkarDetails() {
                 <VStack className="items-center gap-4 mt-6">
                     {isAudioMode && audioSource ? (
                         /* Audio Player Mode */
-                        <LecteurAudio audioSource={audioSource} />
+                        <LecteurAudio 
+                            audioSource={audioSource} 
+                            count={currentAthkar?.count || 1}
+                            autoPlay={true}
+                            onComplete={handleAudioComplete}
+                        />
                     ) : (
                         /* Counter Mode */
                         <>
