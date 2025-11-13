@@ -3,99 +3,18 @@ import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
 import { Divider } from "@/components/ui/divider";
 import { HStack } from "@/components/ui/hstack";
 import { Icon } from "@/components/ui/icon";
-import { Pressable } from "@/components/ui/pressable";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
 import ButtonAction from "@/src/components/ButtonAction";
+import RadioSelect from "@/src/components/RadioSelect";
+import SettingSection from "@/src/components/SettingSection";
 import ZixDialogueBox from "@/src/components/ZixDialogueBox";
 import { useSelectedCity, useSetting } from "@/src/features/prayers/hooks";
 import { City } from "@/src/types/city";
 import * as Location from "expo-location";
-import {
-  Calculator,
-  Check,
-  Clock,
-  MapPin,
-  RefreshCcw,
-  Settings,
-  Stars,
-  X,
-} from "lucide-react-native";
+import { Calculator, Check, Clock, MapPin, RefreshCcw, Settings, Stars, X } from "lucide-react-native";
 import { useEffect, useState } from "react";
 import { Alert, ScrollView } from "react-native";
-
-interface RadioSelectProps {
-  options: string[];
-  selected: string;
-  onSelect: (value: string) => void;
-}
-
-function RadioSelect({ options, selected, onSelect }: RadioSelectProps) {
-  return (
-    <VStack className="gap-2 mt-2 p-6">
-      {options.map((option) => (
-        <Pressable
-          key={option}
-          onPress={() => onSelect(option)}
-          className=" gap-3 p-3 rounded-lg border border-gray-200"
-        >
-          <HStack className="items-center justify-end gap-3">
-            <Text className="text-right text-gray-900">{option}</Text>
-            <Box
-              className={`w-5 h-5 rounded-full border-2 items-center justify-center ${
-                selected === option ? "border-primary-500" : "border-gray-300"
-              }`}
-            >
-              {selected === option && (
-                <Box className="w-3 h-3 rounded-full bg-primary-500 items-center justify-center" />
-              )}
-            </Box>
-          </HStack>
-        </Pressable>
-      ))}
-    </VStack>
-  );
-}
-
-// Settings Section Component
-interface SettingsSectionProps {
-  icon: React.ComponentType<any>;
-  title: string;
-  subtitle: string;
-  children: React.ReactNode;
-  color: string;
-}
-
-function SettingsSection({
-  icon: IconComponent,
-  color,
-  title,
-  subtitle,
-  children,
-}: SettingsSectionProps) {
-  return (
-    <VStack className="mb-6 border-2 border-gray-200 rounded-lg">
-      <HStack className={`items-center gap-3 mb-2 p-6 bg-${color}-100`}>
-        <VStack className="flex-1">
-          <Text className="text-base font-semibold text-gray-900 text-right">
-            {title}
-          </Text>
-          <Text className="text-sm text-gray-500 mt-1 text-right">
-            {subtitle}
-          </Text>
-        </VStack>
-        <Box className="w-10 h-10 rounded-full bg-primary-100 items-center justify-center">
-          <Icon
-            as={IconComponent as any}
-            size={20}
-            className="text-primary-500"
-          />
-        </Box>
-      </HStack>
-      {children}
-    </VStack>
-  );
-}
 
 export default function SettingCard({
   isOpen,
@@ -289,37 +208,40 @@ export default function SettingCard({
         style={{ height: 500, padding: 26 }}
         showsVerticalScrollIndicator={false}
       >
-        <SettingsSection
+        <SettingSection
           icon={Calculator}
           color="primary"
           title="اعدادات طريقة الحساب"
           subtitle="اختر الطريقة المناسبة لحساب المواقيت حسب منطقتك"
+          className="mb-6"
         >
           <RadioSelect
             options={calculationMethods}
             selected={calculationMethod}
             onSelect={setCalculationMethod}
           />
-        </SettingsSection>
+        </SettingSection>
 
-        <SettingsSection
+        <SettingSection
           icon={Clock}
           color="secondary"
           title="طريقة حساب وقت صلاة العصر"
           subtitle="اختر الطريقة المناسبة لحساب وقت العصر حسب المذهب"
+          className="mb-6"
         >
           <RadioSelect
             options={asrMethods}
             selected={asrMethod}
             onSelect={setAsrMethod}
           />
-        </SettingsSection>
+        </SettingSection>
 
-        <SettingsSection
+        <SettingSection
           icon={MapPin}
           color="tertiary"
           title="تحديث الموقع"
           subtitle="تحديث الموقع الحالي لحساب مواقيت الصلاة بدقة"
+          className="mb-6"
         >
           <Box className="p-6 items-center justify-center">
             <HStack className="w-full items-center justify-end gap-3 mb-3">
@@ -343,7 +265,7 @@ export default function SettingCard({
               className="w-full bg-tertiary-500"
             />
           </Box>
-        </SettingsSection>
+        </SettingSection>
       </ScrollView>
     </ZixDialogueBox>
   );
