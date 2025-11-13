@@ -11,4 +11,6 @@ export { usePrayerCountdown } from './usePrayerCountdown';
 export { usePrayers } from './usePrayers';
 export type { Prayer } from './usePrayers';
 export { SelectedCityProvider, useSelectedCity } from './useSelectedCity';
+export { useSetting } from './useSetting';
+export type { UseSettingReturn } from './useSetting';
 

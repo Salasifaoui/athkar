@@ -8,7 +8,9 @@ import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
 import ButtonAction from "@/src/components/ButtonAction";
 import ZixDialogueBox from "@/src/components/ZixDialogueBox";
-import { useSelectedCity } from "@/src/features/prayers/hooks";
+import { useSelectedCity, useSetting } from "@/src/features/prayers/hooks";
+import { City } from "@/src/types/city";
+import * as Location from "expo-location";
 import {
   Calculator,
   Check,
@@ -19,8 +21,8 @@ import {
   Stars,
   X,
 } from "lucide-react-native";
-import { useState } from "react";
-import { ScrollView } from "react-native";
+import { useEffect, useState } from "react";
+import { Alert, ScrollView } from "react-native";
 
 interface RadioSelectProps {
   options: string[];
@@ -102,7 +104,16 @@ export default function SettingCard({
   isOpen: boolean;
   onClose: () => void;
 }) {
-  const { selectedCity } = useSelectedCity();
+  const { selectedCity, setSelectedCity } = useSelectedCity();
+  const {
+    settings,
+    loading: settingsLoading,
+    updateSettings,
+    updateLocation,
+    updateCalculationMethod,
+    updateAsrMethod,
+  } = useSetting();
+
   const [calculationMethod, setCalculationMethod] = useState(
     "رابطة العالم الاسلامية"
   );
@@ -117,17 +128,103 @@ export default function SettingCard({
 
   const asrMethods = ["الشافعي", "الحنفي"];
 
-  const handleReloadLocation = () => {
-    console.log("Reloading location...");
+  // Load settings when component opens or settings are loaded
+  useEffect(() => {
+    if (isOpen && settings) {
+      setCalculationMethod(settings.method_calculate);
+      setAsrMethod(settings.method_asr);
+    } else if (isOpen && !settings && !settingsLoading) {
+      // Initialize with default values if no settings exist
+      setCalculationMethod("رابطة العالم الاسلامية");
+      setAsrMethod("الشافعي");
+    }
+  }, [isOpen, settings, settingsLoading]);
+
+  const handleReloadLocation = async () => {
+    try {
+      // Request location permissions
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        Alert.alert(
+          "الإذن مطلوب",
+          "يجب السماح بالوصول إلى الموقع لتحديث الموقع الحالي",
+          [{ text: "حسناً" }]
+        );
+        return;
+      }
+
+      // Get current location
+      const location = await Location.getCurrentPositionAsync({
+        accuracy: Location.Accuracy.Balanced,
+      });
+
+      const { latitude, longitude } = location.coords;
+
+      // Reverse geocode to get address information
+      const reverseGeocode = await Location.reverseGeocodeAsync({
+        latitude,
+        longitude,
+      });
+
+      if (reverseGeocode && reverseGeocode.length > 0) {
+        const address = reverseGeocode[0];
+        const cityName = address.city || address.region || address.name || "Unknown";
+        const countryCode = address.isoCountryCode || "US";
+        
+        // Create City object
+        const newCity: City = {
+          id: `${latitude}-${longitude}`, // Generate unique ID from coordinates
+          name: cityName,
+          apiName: cityName, // Use city name as API name
+          country: countryCode,
+        };
+
+        // Update location in settings
+        await updateLocation(newCity);
+        
+        // Update selected city in context
+        setSelectedCity(newCity);
+
+        console.log("Location updated successfully:", newCity);
+      } else {
+        throw new Error("Unable to get address from location");
+      }
+    } catch (error) {
+      console.error("Error updating location:", error);
+      Alert.alert(
+        "خطأ",
+        "فشل في تحديث الموقع. يرجى المحاولة مرة أخرى.",
+        [{ text: "حسناً" }]
+      );
+    }
   };
 
   const handleClose = () => {
     onClose();
   };
 
-  const handleConfirm = () => {
-    // TODO: Save settings
-    onClose();
+  const handleConfirm = async () => {
+    try {
+      if (settings) {
+        // Update existing settings
+        await updateSettings({
+          location: selectedCity,
+          method_calculate: calculationMethod,
+          method_asr: asrMethod,
+        });
+      } else {
+        // Create new settings
+        await updateSettings({
+          location: selectedCity,
+          method_calculate: calculationMethod,
+          method_asr: asrMethod,
+        });
+      }
+      onClose();
+    } catch (error) {
+      console.error("Error saving settings:", error);
+      // Optionally show error message to user
+    }
   };
   return (
     <ZixDialogueBox

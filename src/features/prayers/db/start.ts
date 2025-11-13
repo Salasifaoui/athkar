@@ -46,6 +46,19 @@ export function useSetupDatabase() {
         });
       })
       .catch((error) => console.error('❌ خطأ في إنشاء الجدول:', error));
+
+    // Create settings table
+    db.execAsync(`
+        CREATE TABLE IF NOT EXISTS prayer_settings (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          location TEXT,
+          method_calculate TEXT,
+          method_asr TEXT
+        );`
+      ).then(() => {
+        console.log('✅ تم إنشاء جدول الإعدادات بنجاح أو هو موجود مسبقًا');
+      })
+      .catch((error) => console.error('❌ خطأ في إنشاء جدول الإعدادات:', error));
 }
 
 // Helper function to format date as YYYY-MM-DD

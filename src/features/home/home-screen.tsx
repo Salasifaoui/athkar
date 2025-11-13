@@ -5,7 +5,7 @@ import { ScreenLayout } from "@/components/ui/screen-layout/screen-layout";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
 import { Star } from "lucide-react-native";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { ScrollView } from "react-native";
 import Ahadith from "../ahadith/ui/ahadith";
 import Athkar from "../athkar/ui/athkar";
@@ -27,23 +27,12 @@ export default function HomeScreen() {
     return new Date(now.getFullYear(), now.getMonth(), now.getDate());
   }, []);
   
-  const [currentDate, setCurrentDate] = useState(today);
-  
-  // useFocusEffect(() => {
-  //   // Only update if the day has changed
-  //   const now = new Date();
-  //   const todayDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  //   const currentDateOnly = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
-    
-  //   if (todayDate.getTime() !== currentDateOnly.getTime()) {
-  //     setCurrentDate(todayDate);
-  //   }
-  // });
+  const currentDate = today;
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <Header currentDate={currentDate} />
       <ScreenLayout>
-        <VStack className="gap-4 pt-4">
+        <VStack className="gap-4 pt-4 mb-20">
           <Prayers />
           <Ahadith />
           <VStack className="gap-4 mb-4">
