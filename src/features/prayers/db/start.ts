@@ -233,3 +233,75 @@ export const hasAnyPrayerTimesInDB = async (): Promise<boolean> => {
   );
   return (result?.count ?? 0) > 0;
 };
+
+// Get prayer times by month from database
+export const getPrayerTimesByMonthFromDB = async (year: number, month: number): Promise<PrayerTimeRecord[]> => {
+  const allResults = await db.getAllAsync<PrayerTimeRecord>(
+    `SELECT * FROM prayer_times ORDER BY date ASC`
+  );
+  
+  // Filter results by month and year
+  const filtered = allResults.filter((row) => {
+    try {
+      // Try to parse date if it's JSON
+      let dateStr = row.date;
+      try {
+        const dateObj = JSON.parse(row.date);
+        // If it's a JSON object, extract the date string
+        if (dateObj.date) {
+          dateStr = dateObj.date;
+        } else if (dateObj.day && dateObj.month && dateObj.year) {
+          // Construct date string from JSON object parts
+          dateStr = `${dateObj.day}-${dateObj.month.number}-${dateObj.year}`;
+        }
+      } catch {
+        // Not JSON, use as is (likely DD-MM-YYYY format from API)
+      }
+      
+      // Parse date string (API returns DD-MM-YYYY format)
+      const parts = dateStr.split('-');
+      if (parts.length === 3) {
+        const day = parseInt(parts[0], 10);
+        const rowMonth = parseInt(parts[1], 10);
+        const rowYear = parseInt(parts[2], 10);
+        
+        // Check if it's DD-MM-YYYY format (day > 12 indicates this)
+        if (day > 12 || (day <= 12 && rowYear < 1000)) {
+          // DD-MM-YYYY format
+          return rowMonth === month && rowYear === year;
+        } else if (rowYear > 1000) {
+          // YYYY-MM-DD format
+          return rowMonth === month && rowYear === year;
+        }
+      }
+      return false;
+    } catch {
+      return false;
+    }
+  });
+  
+  return filtered;
+};
+
+// Check if month exists in database
+export const hasMonthInDB = async (year: number, month: number): Promise<boolean> => {
+  const results = await getPrayerTimesByMonthFromDB(year, month);
+  return results.length > 0;
+};
+
+// Save prayer times for a month
+export const savePrayerTimesByMonth = async (monthData: {
+  gregorianDate: any;
+  timings: PrayerTimings;
+  nameArabic: string;
+  hijriDate?: any;
+}[]): Promise<void> => {
+  for (const item of monthData) {
+    await savePrayerTimes(
+      item.gregorianDate,
+      item.timings,
+      item.nameArabic,
+      item.hijriDate
+    );
+  }
+};

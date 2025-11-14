@@ -1,7 +1,13 @@
 import { City } from '@/src/types/city';
 import { Hijri } from '@/src/types/hijri';
+import axios from 'axios';
+import * as Network from 'expo-network';
 import {
   getDateGregorianAndHijriFromDB,
+  getPrayerTimesByMonthFromDB,
+  hasMonthInDB,
+  PrayerTimeRecord,
+  savePrayerTimesByMonth,
   saveSevenDaysPrayerTimes
 } from '../db/start';
 
@@ -142,5 +148,77 @@ export const prayerService = {
     const result = await getDateGregorianAndHijriFromDB(date);
     // const result = await getPrayerTimesFromDBAllDates();
     return result;
+  },
+
+  // Check network connectivity
+  checkNetworkConnection: async (): Promise<boolean> => {
+    try {
+      const state = await Network.getNetworkStateAsync();
+      return (state.isConnected ?? false) && (state.isInternetReachable ?? false);
+    } catch (error) {
+      console.error('Error checking network connection:', error);
+      return false;
+    }
+  },
+
+  // Get prayer times by month from database
+  getPrayerTimesByMonth: async (year: number, month: number): Promise<PrayerTimeRecord[]> => {
+    return await getPrayerTimesByMonthFromDB(year, month);
+  },
+
+  // Check if month exists in database
+  hasMonthInDatabase: async (year: number, month: number): Promise<boolean> => {
+    return await hasMonthInDB(year, month);
+  },
+
+  // Fetch prayer times by month from API
+  fetchPrayerTimesByMonth: async (selectedCity: City, year: number, month: number): Promise<void> => {
+    try {
+      const response = await axios.get(
+        `https://api.aladhan.com/v1/calendarByCity/${year}/${month}?country=${selectedCity.country}&city=${selectedCity.apiName}`
+      );
+      
+      const monthData = response.data.data.map((item: any) => ({
+        gregorianDate: item.date.gregorian.date,
+        timings: item.timings as PrayerTimings,
+        nameArabic: item.date.hijri.weekday.ar,
+        hijriDate: item.date.hijri.date,
+      }));
+      
+      await savePrayerTimesByMonth(monthData);
+      console.log(`✅ تم حفظ أوقات الصلاة لشهر ${month}/${year}`);
+    } catch (error) {
+      console.error(`❌ خطأ في جلب أوقات الصلاة لشهر ${month}/${year}:`, error);
+      throw error;
+    }
+  },
+
+  // Get or fetch prayer times by month (with network check)
+  getOrFetchPrayerTimesByMonth: async (
+    selectedCity: City,
+    year: number,
+    month: number
+  ): Promise<{ data: PrayerTimeRecord[]; fromCache: boolean }> => {
+    // First, check if month exists in database
+    const hasMonth = await hasMonthInDB(year, month);
+    
+    if (hasMonth) {
+      // Get from database
+      const data = await getPrayerTimesByMonthFromDB(year, month);
+      return { data, fromCache: true };
+    }
+    
+    // Month doesn't exist, check network
+    const isConnected = await prayerService.checkNetworkConnection();
+    
+    if (isConnected) {
+      // Fetch from API
+      await prayerService.fetchPrayerTimesByMonth(selectedCity, year, month);
+      const data = await getPrayerTimesByMonthFromDB(year, month);
+      return { data, fromCache: false };
+    }
+    
+    // No network, return empty array
+    return { data: [], fromCache: false };
   },
 };

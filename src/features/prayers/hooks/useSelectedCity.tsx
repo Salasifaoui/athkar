@@ -37,3 +37,9 @@ export function useSelectedCity() {
   }
   return context;
 }
+
+// Safe version that returns null instead of throwing
+export function useSelectedCitySafe() {
+  const context = useContext(SelectedCityContext);
+  return context ?? null;
+}

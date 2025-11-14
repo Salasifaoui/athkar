@@ -1,35 +1,41 @@
 import { Box } from "@/components/ui/box";
-import { Heading } from "@/components/ui/heading";
 import { HStack } from "@/components/ui/hstack";
 import { Icon } from "@/components/ui/icon";
 import { Image } from "@/components/ui/image";
-import { Spinner } from "@/components/ui/spinner";
-import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
 import ButtonAction from "@/src/components/ButtonAction";
-import { renderNameMonth, renderNameMonthHijri } from "@/src/utils/utils";
 import { useRouter } from "expo-router";
-import { Book, Info, Radar } from "lucide-react-native";
+import { useAtom } from "jotai";
+import { Info, Radar, User } from "lucide-react-native";
 import { useEffect, useState } from "react";
-import { usePrayers, useSelectedCity } from "../../prayers/hooks";
+import { timingsAtom, usePrayerCountdown, usePrayers, useSelectedCity } from "../../prayers/hooks";
 import { getCurrentDay } from "../../prayers/hooks/usePrayers";
+import RestTimeForNextPrayer from "../../prayers/ui/component/rest-time-for-next-prayer";
+import CurrentDay from "./current-day";
 
 // Fake data for dynamic content
 const fakeData = {
   backgroundImage:
     "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800&q=80",
-  content: {
-    title: "السلام عليكم ورحمة الله وبركاته",
-    text: "ان الله مع الصابرين",
-    source: "القرآن الكريم",
-  },
+
 };
 
-export default function Header({ currentDate, setIsAboutMeOpen }: { currentDate: Date, setIsAboutMeOpen: (isOpen: boolean) => void }) {
+export default function Header({
+  currentDate,
+  setIsAboutMeOpen,
+}: {
+  currentDate: Date;
+  setIsAboutMeOpen: (isOpen: boolean) => void;
+}) {
   const router = useRouter();
   const [data] = useState(fakeData);
   const { selectedCity } = useSelectedCity();
-  const [currentDay, setCurrentDay] = useState<{ date: string, date_hijri: string, nameArabic: string } | null>(null);
+  const[currentUser, setCurrentUser] = useState(null);
+  const [currentDay, setCurrentDay] = useState<{
+    date: string;
+    date_hijri: string;
+    nameArabic: string;
+  } | null>(null);
 
   usePrayers(selectedCity, currentDate);
   // Use atom directly
@@ -38,11 +44,14 @@ export default function Header({ currentDate, setIsAboutMeOpen }: { currentDate:
     const fetchCurrentDay = async () => {
       const currentDay = await getCurrentDay(currentDate);
       setCurrentDay(currentDay);
-    }
+    };
     fetchCurrentDay();
   }, [currentDate]);
 
+  const [timings] = useAtom(timingsAtom);
 
+  const isToday = currentDate.toDateString() === new Date().toDateString();
+  const countdown = usePrayerCountdown(isToday ? timings : null);
 
   return (
     <Box className="relative h-[380px] w-full overflow-hidden rounded-b-3xl">
@@ -54,11 +63,8 @@ export default function Header({ currentDate, setIsAboutMeOpen }: { currentDate:
         alt="Header background"
       />
 
-      {/* Overlay for better text readability */}
-      {/* <Box className="absolute inset-0 bg-black/30" /> */}
-
       {/* Content Container */}
-      <VStack className="flex-1 p-4 justify-between relative z-10 pt-16 gap-4">
+      <VStack className="flex-1 p-4  relative z-10 pt-16 gap-2">
         {/* Top Part */}
         <HStack className="justify-between items-start w-full">
           {/* Left: Two buttons */}
@@ -69,7 +75,9 @@ export default function Header({ currentDate, setIsAboutMeOpen }: { currentDate:
               iconAs={Radar}
               sizeIcon={20}
               colorIconAs="text-white"
-              onPress={() => {router.push("/al-kibla")}}
+              onPress={() => {
+                router.push("/al-kibla");
+              }}
             />
             <ButtonAction
               variant="outline"
@@ -77,71 +85,24 @@ export default function Header({ currentDate, setIsAboutMeOpen }: { currentDate:
               iconAs={Info}
               sizeIcon={20}
               colorIconAs="text-white"
-              onPress={() => {setIsAboutMeOpen(true)}}
+              onPress={() => {
+                setIsAboutMeOpen(true);
+              }}
             />
           </HStack>
-
-          {/* Right: Date boxes (day, month, year) */}
-          { currentDay  ? (
-            <VStack className="gap-2">
-              <HStack className="gap-2">
-                <VStack className="gap-2">
-                  <Text className="text-white text-lg font-bold text-right">
-                    {renderNameMonth(currentDay?.date || "") || ""}
-                  </Text>
-
-                  <Box className="justify-center items-center bg-white/20 backdrop-blur-sm rounded-lg px-3 py-2 border border-white/30">
-                    <Text className="text-white text-lg font-bold">
-                      {currentDay?.date_hijri?.split("-")[0]}{" "}
-                      {renderNameMonthHijri(currentDay?.date_hijri || "")}
-                    </Text>
-                  </Box>
-                </VStack>
-                <Box className="justify-center items-center bg-white/20 backdrop-blur-sm rounded-lg px-3 py-2 border border-white/30">
-                  <Text className="text-white text-lg font-bold">
-                    {currentDay?.date?.split("-")[0]}
-                  </Text>
-                </Box>
-              </HStack>
-
-              <HStack className="gap-2 justify-end items-end">
-                <Text className="text-white text-lg font-bold">
-                  {currentDay?.date_hijri?.split("-")[2]}
-                </Text>
-                <Text className="text-white text-lg font-bold">/</Text>
-
-                <Text className="text-white text-lg font-bold">
-                  {currentDay?.date?.split("-")[2]}
-                </Text>
-              </HStack>
-              <Box className="justify-center items-center bg-white/20 backdrop-blur-sm rounded-lg px-3 py-2 border border-white/30">
-              <Text className="text-white text-lg font-bold text-center">
-                {currentDay?.nameArabic}
-              </Text>
-              </Box>
-            </VStack>
-          ) : (
-            <Spinner size="large" />
-          )}
+          <VStack className="justify-end items-end  gap-3">
+            {/* Profile user if exist and not online show offline icon */}
+            {currentUser !== null ? (
+              <Icon as={User} size={20} className="text-white" />
+            ) : null}
+          </VStack>
         </HStack>
-
+      {countdown && <RestTimeForNextPrayer countdown={countdown} />}
+   
         {/* Bottom Part: Justified to end */}
-        <VStack className="justify-end items-end w-full gap-3">
-          <Heading size="2xl" className="text-white">
-            {data.content.title}
-          </Heading>
-
-          <Box className="bg-white/20 backdrop-blur-sm rounded-lg px-4 py-3 border border-white/30 max-w-[250px]">
-            <Text className="text-white text-sm">{data.content.text}</Text>
-          </Box>
-          <HStack className="justify-center items-center bg-white/20 backdrop-blur-sm rounded-lg px-4 py-3 border border-white/30 max-w-[250px] gap-2">
-            <Icon as={Book} size={20} className="stroke-white" />
-            <Text className="text-white text-sm italic">
-              {data.content.source}
-            </Text>
-          </HStack>
-        </VStack>
       </VStack>
+      
+      <CurrentDay currentDay={currentDay} />
     </Box>
   );
 }

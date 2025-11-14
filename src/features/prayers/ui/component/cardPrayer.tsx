@@ -8,12 +8,12 @@ import { Spinner } from "@/components/ui/spinner";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
 import { usePrayerCountdown, usePrayers, useSelectedCity } from "@/src/features/prayers/hooks";
-import { currentDayAtom, prayersAtom, prayersLoadingAtom, timingsAtom } from "@/src/features/prayers/store/prayersStore";
+import { currentDayAtom, prayersLoadingAtom, timingsAtom } from "@/src/features/prayers/store/prayersStore";
 import { renderNameMonth, renderNameMonthHijri } from "@/src/utils/utils";
 import { useAtom } from "jotai";
-import { ChevronLeft, ChevronRight, Clock, Stars } from "lucide-react-native";
-import { useMemo } from "react";
-import { View } from "react-native";
+import { ChevronLeft, ChevronRight, Stars } from "lucide-react-native";
+import { useState } from "react";
+import RestTimeForNextPrayer from "./rest-time-for-next-prayer";
 
 interface CardPrayerProps {
   currentDate: Date;
@@ -22,11 +22,10 @@ interface CardPrayerProps {
 
 export default function CardPrayer({ currentDate, onDateChange }: CardPrayerProps) {
   const { selectedCity } = useSelectedCity();
+  const [isOpen, setIsOpen] = useState(false);
   // Trigger data fetch for the selected date
   usePrayers(selectedCity, currentDate);
-  
-  // Use atoms directly
-  const [prayers] = useAtom(prayersAtom);
+
   const [timings] = useAtom(timingsAtom);
   const [loading] = useAtom(prayersLoadingAtom);
   const [currentDay] = useAtom(currentDayAtom);
@@ -64,58 +63,6 @@ export default function CardPrayer({ currentDate, onDateChange }: CardPrayerProp
     onDateChange(newDate);
   };
 
-  // Calculate progress percentage
-  const progress = useMemo(() => {
-    if (!countdown || !prayers.length) {
-      return 0;
-    }
-
-    // Find current and next prayer indices
-    const now = new Date();
-    const currentMinutes = now.getHours() * 60 + now.getMinutes();
-    
-    let currentPrayerIndex = -1;
-    let nextPrayerIndex = 0;
-
-    for (let i = 0; i < prayers.length; i++) {
-      const [hours, mins] = prayers[i].time.split(":").map(Number);
-      const prayerMinutes = hours * 60 + mins;
-      if (currentMinutes < prayerMinutes) {
-        nextPrayerIndex = i;
-        currentPrayerIndex = i === 0 ? prayers.length - 1 : i - 1;
-        break;
-      }
-    }
-
-    if (currentPrayerIndex === -1) {
-      return 0;
-    }
-
-    const currentPrayer = prayers[currentPrayerIndex];
-    const nextPrayer = prayers[nextPrayerIndex];
-    
-    const [currentHours, currentMins] = currentPrayer.time.split(":").map(Number);
-    const [nextHours, nextMins] = nextPrayer.time.split(":").map(Number);
-    
-    const currentPrayerMinutes = currentHours * 60 + currentMins;
-    const nextPrayerMinutes = nextHours * 60 + nextMins;
-    
-    let timeSinceCurrentPrayer: number;
-    let totalTimeBetweenPrayers: number;
-
-    if (nextPrayerIndex === 0) {
-      timeSinceCurrentPrayer = currentMinutes - currentPrayerMinutes;
-      totalTimeBetweenPrayers = 24 * 60 - currentPrayerMinutes + nextPrayerMinutes;
-    } else {
-      timeSinceCurrentPrayer = currentMinutes - currentPrayerMinutes;
-      totalTimeBetweenPrayers = nextPrayerMinutes - currentPrayerMinutes;
-    }
-
-    return Math.min(
-      Math.max((timeSinceCurrentPrayer / totalTimeBetweenPrayers) * 100, 0),
-      100
-    ) / 100;
-  }, [countdown, prayers]);
 
   return (
     <Card className="overflow-hidden rounded-2xl p-0 m-4">
@@ -164,32 +111,7 @@ export default function CardPrayer({ currentDate, onDateChange }: CardPrayerProp
               <Text className="text-white text-base">جاري التحميل...</Text>
             </VStack>
           ) : countdown && isToday ? (
-            <VStack className="gap-3 p-6">
-              {/* Arabic Label */}
-              <Text className="text-white text-base text-center">
-                الوقت المتبقي حتى {countdown.nextPrayerNameArabic}
-              </Text>
-
-              {/* Countdown Container with Frosted Glass Effect */}
-              <Box className="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/20 shadow-lg">
-                <HStack className="items-center justify-center gap-3 mb-3">
-                  <Text className="text-white text-4xl font-bold">
-                    {String(countdown.hours).padStart(2, "0")}:
-                    {String(countdown.minutes).padStart(2, "0")}:
-                    {String(countdown.seconds).padStart(2, "0")}
-                  </Text>
-                  <Icon as={Clock} size={24} className="text-white" />
-                </HStack>
-
-                {/* Progress Bar */}
-                <View className="h-2 bg-gray-300/30 rounded-full overflow-hidden">
-                  <View
-                    className="h-full bg-gray-600 rounded-full"
-                    style={{ width: `${progress * 100}%` }}
-                  />
-                </View>
-              </Box>
-            </VStack>
+            <RestTimeForNextPrayer countdown={countdown} />
           ) : (
             <VStack className="gap-3 p-6">
               <Text className="text-white text-base text-center">
@@ -199,6 +121,7 @@ export default function CardPrayer({ currentDate, onDateChange }: CardPrayerProp
           )}
         </VStack>
       </Box>
+      
     </Card>
   );
 }
