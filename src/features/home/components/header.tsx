@@ -55,7 +55,7 @@ export default function Header({ currentDate, setIsAboutMeOpen }: { currentDate:
       />
 
       {/* Overlay for better text readability */}
-      <Box className="absolute inset-0 bg-black/30" />
+      {/* <Box className="absolute inset-0 bg-black/30" /> */}
 
       {/* Content Container */}
       <VStack className="flex-1 p-4 justify-between relative z-10 pt-16 gap-4">

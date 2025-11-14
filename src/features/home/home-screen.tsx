@@ -11,31 +11,38 @@ import { ScrollView } from "react-native";
 import AboutMe from "../aboutMe/ui/aboutMe";
 import Ahadith from "../ahadith/ui/ahadith";
 import Athkar from "../athkar/ui/athkar";
+import Flash from "../breakFast/ui/flash";
 import Names from "../names/ui/names";
 import Prayers from "../prayers/ui/prayers";
 import Header from "./components/header";
 
 export default function HomeScreen() {
   const [isAboutMeOpen, setIsAboutMeOpen] = useState(false);
+  
   const colors = {
     primary: "#4A90E2",
     secondary: "#F5A623",
     tertiary: "#50C878",
     quaternary: "#E74C3C",
     quinary: "#9B59B6",
-  }
+  };
   // Use useMemo to create a stable date object that only changes when the day changes
   const today = useMemo(() => {
     const now = new Date();
     return new Date(now.getFullYear(), now.getMonth(), now.getDate());
   }, []);
+
   
+
+  
+
   const currentDate = today;
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <Header currentDate={currentDate} setIsAboutMeOpen={setIsAboutMeOpen} />
-      <ScreenLayout>
-        <VStack className="gap-4 pt-4 mb-20">
+      <ScreenLayout className="pt-0">
+        <Flash />
+        <VStack className="gap-4 mb-20">
           <Prayers />
           <Ahadith />
           <VStack className="gap-4 mb-4">
@@ -52,10 +59,13 @@ export default function HomeScreen() {
             </HStack>
             <HStack className="gap-4">
               <Box className="flex-1 bg-white rounded-xl p-4 border border-gray-200 shadow-sm">
-                <Athkar category="أذكار الصباح والمساء" color={colors.primary} />
+                <Athkar
+                  category="أذكار الصباح والمساء"
+                  color={colors.primary}
+                />
               </Box>
               <Box className="flex-1 bg-white rounded-xl p-4 border border-gray-200 shadow-sm">
-                <Names/>
+                <Names />
               </Box>
             </HStack>
             <HStack className="gap-4">
