@@ -6,7 +6,7 @@ import "../global.css";
 import { useColorScheme } from "@/src/hooks/useColorSchema";
 
 import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
-import { hasAnyPrayerTimesInDB, useSetupDatabase } from "@/src/features/prayers/db/start";
+import { hasAnyPrayerTimesInDB } from "@/src/features/prayers/db/start";
 import { InitialSyncProvider, SelectedCityProvider, useInitialSync, useSelectedCity } from "@/src/features/prayers/hooks";
 import { prayerService } from "@/src/features/prayers/services/prayerService";
 import * as Network from 'expo-network';
@@ -25,6 +25,7 @@ const StackLayout = () => {
       <Stack.Screen name="all-prayers" options={{ headerShown: false }} />
       <Stack.Screen name="athkar-details" options={{ headerShown: false }} />
       <Stack.Screen name="al-kibla" options={{ headerShown: false }} />
+      <Stack.Screen name="(onboarding)" options={{ headerShown: false }} />
       <Stack.Screen
         name="modal"
         options={{ presentation: "modal", title: "Modal" }}
@@ -81,9 +82,6 @@ function NetworkSyncHandler() {
 
 export default function RootLayout() {
   const { isDarkColorScheme } = useColorScheme();
-  
-  // Initialize database
-  useSetupDatabase();
 
   return (
     <AuthProvider>

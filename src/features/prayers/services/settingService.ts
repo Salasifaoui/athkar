@@ -11,9 +11,9 @@ export interface PrayerSettings {
 }
 
 export interface PrayerSettingsInput {
-  location: City;
-  method_calculate: string;
-  method_asr: string;
+  location?: City;
+  method_calculate?: string;
+  method_asr?: string;
 }
 
 // Get prayer settings from database
@@ -57,7 +57,9 @@ export const savePrayerSettings = async (
       `SELECT COUNT(*) as count FROM prayer_settings`
     );
 
-    const locationJson = JSON.stringify(settings.location);
+    const locationJson = settings.location ? JSON.stringify(settings.location) : undefined;
+    const methodCalculate = settings.method_calculate ? settings.method_calculate : undefined;
+    const methodAsr = settings.method_asr ? settings.method_asr : undefined;
 
     if (existing && existing.count > 0) {
       // Update existing settings
@@ -65,7 +67,7 @@ export const savePrayerSettings = async (
         `UPDATE prayer_settings 
          SET location = ?, method_calculate = ?, method_asr = ? 
          WHERE id = (SELECT id FROM prayer_settings ORDER BY id DESC LIMIT 1)`,
-        [locationJson, settings.method_calculate, settings.method_asr]
+        [locationJson, methodCalculate, methodAsr]
       );
       console.log('✅ تم تحديث الإعدادات بنجاح');
     } else {
@@ -73,7 +75,7 @@ export const savePrayerSettings = async (
       await db.runAsync(
         `INSERT INTO prayer_settings (location, method_calculate, method_asr)
          VALUES (?, ?, ?)`,
-        [locationJson, settings.method_calculate, settings.method_asr]
+        [locationJson, methodCalculate, methodAsr]
       );
       console.log('✅ تم حفظ الإعدادات بنجاح');
     }

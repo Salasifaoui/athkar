@@ -1,4 +1,6 @@
+import JaweebIcon from "@/components/icons/jaweeb.svg";
 import { Box } from "@/components/ui/box";
+import { Button } from "@/components/ui/button";
 import { HStack } from "@/components/ui/hstack";
 import { Icon } from "@/components/ui/icon";
 import { Image } from "@/components/ui/image";
@@ -8,7 +10,12 @@ import { useRouter } from "expo-router";
 import { useAtom } from "jotai";
 import { Info, Radar, User } from "lucide-react-native";
 import { useEffect, useState } from "react";
-import { timingsAtom, usePrayerCountdown, usePrayers, useSelectedCity } from "../../prayers/hooks";
+import {
+  timingsAtom,
+  usePrayerCountdown,
+  usePrayers,
+  useSelectedCity,
+} from "../../prayers/hooks";
 import { getCurrentDay } from "../../prayers/hooks/usePrayers";
 import RestTimeForNextPrayer from "../../prayers/ui/component/rest-time-for-next-prayer";
 import CurrentDay from "./current-day";
@@ -17,7 +24,6 @@ import CurrentDay from "./current-day";
 const fakeData = {
   backgroundImage:
     "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800&q=80",
-
 };
 
 export default function Header({
@@ -30,7 +36,7 @@ export default function Header({
   const router = useRouter();
   const [data] = useState(fakeData);
   const { selectedCity } = useSelectedCity();
-  const[currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
   const [currentDay, setCurrentDay] = useState<{
     date: string;
     date_hijri: string;
@@ -89,6 +95,15 @@ export default function Header({
                 setIsAboutMeOpen(true);
               }}
             />
+            <Button
+              variant="outline"
+              className="w-12 h-12 rounded-full bg-white/20 border-white/30"
+              onPress={() => {
+                // Add your action here
+              }}
+            >
+              <JaweebIcon width={25} height={25} fill="white" />
+            </Button>
           </HStack>
           <VStack className="justify-end items-end  gap-3">
             {/* Profile user if exist and not online show offline icon */}
@@ -97,11 +112,11 @@ export default function Header({
             ) : null}
           </VStack>
         </HStack>
-      {countdown && <RestTimeForNextPrayer countdown={countdown} />}
-   
+        {countdown && <RestTimeForNextPrayer countdown={countdown} />}
+
         {/* Bottom Part: Justified to end */}
       </VStack>
-      
+
       <CurrentDay currentDay={currentDay} />
     </Box>
   );

@@ -9,7 +9,7 @@ export default function Screen() {
   useEffect(() => {
     // Defer navigation to ensure the router is ready
     const timer = setTimeout(() => {
-      router.replace("/(tabs)/home");
+      router.replace("/(onboarding)/start");
     }, 0);
 
     return () => clearTimeout(timer);
